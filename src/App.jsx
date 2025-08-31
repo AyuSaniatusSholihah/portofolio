@@ -24,8 +24,8 @@ const Portfolio = () => {
       description: "Smart Mathematics Book for the Blind - Media pembelajaran berbasis audiobook Braille dan QR-Integrated Web",
       tech: ["QR Code Integration", "Audio Technology", "Accessibility"],
       category: "Educational Technology",
-      status: "4th Place Winner",
-      collaboration: "Team Project (Competition)",
+      status: "4th Place Winner, In Competition",
+      type: "Team Project (Competition)",
       impact: "Inclusive education for visually impaired students"
     },
     {
@@ -33,18 +33,18 @@ const Portfolio = () => {
       description: "Platform digitalisasi penjualan udang dan olahan untuk UMKM pesisir",
       tech: ["E-Commerce", "AI Recommendations", "Digital Marketing"],
       category: "Business Solution",
-      status: "In Development",
-      collaboration: "Team Project (Competition)",
+      status: "In Competition",
+      type: "Team Project (Competition)",
       impact: "Supporting coastal communities and local SMEs"
     },
     {
-      title: "ShrimpZone E-Commerce",
-      description: "Platform digitalisasi penjualan udang dan olahan untuk UMKM pesisir",
+      title: "Wifi Dashboard",
+      description: "Platform digitalisasi manajemen jaringan wifi untuk Pondok Pesantren Mahasiswa Miftahul Khoirot",
       tech: ["E-Commerce", "AI Recommendations", "Digital Marketing"],
       category: "Business Solution",
       status: "In Development",
-      collaboration: "Team Project (Competition)",
-      impact: "Supporting coastal communities and local SMEs"
+      type: "Individual Project",
+      impact: "Streamlining wifi management and monitoring"
     }
   ];
 
@@ -74,6 +74,16 @@ const Portfolio = () => {
       description: "Handling administrative processes for new student recruitment event, managing documentation and coordination"
     },
     {
+      role: "WiFi Infrastructure Manager",
+      organization: "Pondok Pesantren Mahasiswa Miftahul Khoirot",
+      description: "Managing technical infrastructure and financial records using Google Spreadsheet and web dashboard for systematic tracking"
+    },
+    {
+      role: "Facilities and Infrastructure Division",
+      organization: "Pondok Pesantren Mahasiswa Miftahul Khoirot",
+      description: "Oversee facility management and infrastructure development projects and summarize everything in a google spreadsheet."
+    },
+    {
       role: "Student Council Member",
       organization: "Dewan Ambalan",
       department: "Scouting Organization (High School)",
@@ -85,11 +95,7 @@ const Portfolio = () => {
       department: "High School Extracurricular",
       description: "Developing research and scientific writing skills, participating in student research competitions and academic writing contests"
     },
-    {
-      role: "WiFi Infrastructure Manager",
-      organization: "Boarding House",
-      description: "Managing technical infrastructure and financial records using Google Spreadsheet for systematic tracking"
-    }
+   
   ];
 
   const scrollToSection = (sectionId) => {
@@ -233,44 +239,49 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg border border-pink-100 overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                <div className="bg-gradient-to-r from-pink-100 to-rose-100 p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {project.category}
-                    </span>
-                    {project.status === '4th Place Winner' && (
-                      <Award className="w-5 h-5 text-yellow-500" />
-                    )}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3">{project.description}</p>
-                  <p className="text-pink-600 font-semibold text-sm">{project.status}</p>
-                </div>
-                
-                <div className="p-6">
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, i) => (
-                        <span key={i} className="bg-pink-50 text-pink-600 px-2 py-1 rounded text-xs">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-1">Impact</h4>
-                    <p className="text-xs text-gray-600">{project.impact}</p>
-                  </div>
-                  
-                  <button className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white py-2 rounded-lg font-medium hover:shadow-md transition-all duration-300">
-                    <ExternalLink className="inline w-4 h-4 mr-1" />
-                    Learn More
-                  </button>
-                </div>
-              </div>
+  <div className="bg-gradient-to-r from-pink-100 to-rose-100 p-6">
+    <div className="flex items-center justify-between mb-3">
+      <span className="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+        {project.category}
+      </span>
+      {project.status.includes("Winner") && (
+        <Award className="w-5 h-5 text-yellow-500" />
+      )}
+    </div>
+    <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
+    <p className="text-gray-600 text-sm mb-3">{project.description}</p>
+    <p className="text-pink-600 font-semibold text-sm">{project.status}</p>
+
+    {/* Tambahan: type ditampilkan dengan badge */}
+    <p className="mt-2 inline-block bg-pink-200 text-pink-700 px-3 py-1 rounded-full text-xs font-medium">
+      {project.type}
+    </p>
+  </div>
+  
+  <div className="p-6">
+    <div className="mb-4">
+      <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies</h4>
+      <div className="flex flex-wrap gap-2">
+        {project.tech.map((tech, i) => (
+          <span key={i} className="bg-pink-50 text-pink-600 px-2 py-1 rounded text-xs">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </div>
+    
+    <div className="mb-4">
+      <h4 className="text-sm font-semibold text-gray-700 mb-1">Impact</h4>
+      <p className="text-xs text-gray-600">{project.impact}</p>
+    </div>
+    
+    <button className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white py-2 rounded-lg font-medium hover:shadow-md transition-all duration-300">
+      <ExternalLink className="inline w-4 h-4 mr-1" />
+      Learn More
+    </button>
+  </div>
+</div>
+
             ))}
           </div>
         </div>
