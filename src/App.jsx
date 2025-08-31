@@ -15,7 +15,7 @@ const Portfolio = () => {
       description: "Platform digital ruang curhat anonim berbasis chatbot dan dukungan komunitas",
       tech: ["React", "AI Chatbot", "Community Features"],
       category: "Web Development",
-      status: "In Competition",
+      status: "In Competition, In Development",
       type: "Team Project (Competition)",
       impact: "Supporting SDGs Goal 3: Good Health and Well-being"
     },
@@ -24,7 +24,7 @@ const Portfolio = () => {
       description: "Smart Mathematics Book for the Blind - Media pembelajaran berbasis audiobook Braille dan QR-Integrated Web",
       tech: ["QR Code Integration", "Audio Technology", "Accessibility"],
       category: "Educational Technology",
-      status: "4th Place Winner, In Competition",
+      status: "4th Place Winner, In Competition and In Development",
       type: "Team Project (Competition)",
       impact: "Inclusive education for visually impaired students"
     },
@@ -33,7 +33,7 @@ const Portfolio = () => {
       description: "Platform digitalisasi penjualan udang dan olahan untuk UMKM pesisir",
       tech: ["E-Commerce", "AI Recommendations", "Digital Marketing"],
       category: "Business Solution",
-      status: "In Competition",
+      status: "In Competition, In Development",
       type: "Team Project (Competition)",
       impact: "Supporting coastal communities and local SMEs"
     },
