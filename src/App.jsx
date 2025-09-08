@@ -11,61 +11,68 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: "Mental Health Platform",
-      description: "Platform digital ruang curhat anonim berbasis chatbot dan dukungan komunitas",
-      tech: ["React", "AI Chatbot", "Community Features"],
-      category: "Web Development",
-      status: "In Competition, In Development",
-      type: "Team Project (Competition)",
-      impact: "Supporting SDGs Goal 3: Good Health and Well-being"
+      title: "Hijaiyahku",
+      description: "Platform digital pembelajaran membaca huruf hijaiyah interaktif untuk disabilitas rungu",
+      tech: ["figma"],
+      category: "web design",
+      status: "In Development",
+      type: "Team Project",
+      impact: "Supporting SDGs Goal 4: Quality Education"
     },
     {
-      title: "E-MATHBLIND",
-      description: "Smart Mathematics Book for the Blind - Media pembelajaran berbasis audiobook Braille dan QR-Integrated Web",
-      tech: ["QR Code Integration", "Audio Technology", "Accessibility"],
-      category: "Educational Technology",
-      status: "4th Place Winner, In Competition and In Development",
-      type: "Team Project (Competition)",
-      impact: "Inclusive education for visually impaired students"
+      title: "FarmIntel",
+      description: "Platform digital berbasis AI untuk diagnosis penyakit tanaman cabai dan dukungan komunitas petani",
+      tech: ["figma"],
+      category: "app design",
+      status: "In Development",
+      type: "Team Project",
+      impact: "Supporting SDGs Goal 2: Zero Hunger"
     },
     {
-      title: "ShrimpZone E-Commerce",
+      title: "E-Shrimp",
       description: "Platform digitalisasi penjualan udang dan olahan untuk UMKM pesisir",
-      tech: ["E-Commerce", "AI Recommendations", "Digital Marketing"],
+      tech: ["html", "css", "javascript", "digital marketing"],
       category: "Business Solution",
-      status: "In Competition, In Development",
+      status: "In Essay Competition, In Development",
       type: "Team Project (Competition)",
       impact: "Supporting coastal communities and local SMEs"
     },
     {
+      title: "FriendYours",
+      description: "Platform digital ruang curhat anonim berbasis chatbot dan dukungan komunitas",
+      tech: ["React", "AI Chatbot", "Community Features"],
+      category: "Frontend",
+      status: "In Development",
+      type: "Team Project",
+      impact: "Supporting SDGs Goal 3: Good Health and Well-being"
+    },
+    {
+      title: "Web Math",
+      description: "Media pembelajaran berbasis audiobook Braille dan QR-Integrated Web",
+      tech: ["QR Code Integration", "Audio Technology", "Fuzzy Machine", "React & Vite"],
+      category: "Educational Technology",
+      status: "In Essay Competition and In Development",
+      type: "Team Project (Competition)",
+      impact: "Inclusive education for students with hearing impairments"
+
+    },
+    {
       title: "Wifi Dashboard",
       description: "Platform digitalisasi manajemen jaringan wifi untuk Pondok Pesantren Mahasiswa Miftahul Khoirot",
-      tech: ["E-Commerce", "AI Recommendations", "Digital Marketing"],
+      tech: ["Network Management", "Dashboard UI", "Data Visualization"],
       category: "Business Solution",
       status: "In Development",
-      type: "Individual Project",
+      type: "business project",
       impact: "Streamlining wifi management and monitoring"
     }
   ];
 
   const experiences = [
     {
-      role: "Division Member",
+      role: "Staff Member",
       organization: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
       department: "Kompetisi dan Prestasi",
-      description: "Supporting funding guidance for competition participants, helping students navigate grant application processes for academic competitions"
-    },
-    {
-      role: "Head of Secretary Division",
-      organization: "PKS (Pekan Keluarga SIM)",
-      department: "SIM UNS Event",
-      description: "Leading secretariat operations for major SIM family week event, coordinating documentation and administrative processes"
-    },
-    {
-      role: "Vice Secretary Division",
-      organization: "AKSI (Agenda Kegiatan Studi Banding)",
-      department: "SIM UNS with FST UNDIP",
-      description: "Managing inter-university study visit coordination and documentation between SIM UNS and FST UNDIP"
+      description: "Supporting student competition participation and achievement tracking, assisting in organizing training and workshops"
     },
     {
       role: "Secretary",
@@ -74,7 +81,21 @@ const Portfolio = () => {
       description: "Handling administrative processes for new student recruitment event, managing documentation and coordination"
     },
     {
-      role: "WiFi Infrastructure Manager",
+      role: "Vice Secretary Division",
+      organization: "AKSI (Agenda Kegiatan Studi Banding)",
+      department: "SIM UNS with FST UNDIP",
+      description: "Assisting in secretariat duties for inter-university study event, coordinating schedules helping to find venues"
+    },
+    {
+      role: "Head of Secretary Division",
+      organization: "PKS (Pekan Keluarga SIM)",
+      department: "SIM UNS Event",
+      description: "Leading secretariat operations for major SIM family week event, coordinating documentation and administrative processes"
+    },
+    
+    
+    {
+      role: "WiFi InfrastructuSupportinre Manager",
       organization: "Pondok Pesantren Mahasiswa Miftahul Khoirot",
       description: "Managing technical infrastructure and financial records using Google Spreadsheet and web dashboard for systematic tracking"
     },
@@ -330,7 +351,7 @@ const Portfolio = () => {
                 Development
               </h3>
               <div className="space-y-3">
-                {['Web Development', 'React Framework', 'JavaScript', 'UI/UX Design', 'Database Management'].map((skill) => (
+                {['HTML, CSS, JS', 'React & Vite Framework', 'UI/UX Design', 'Database Management'].map((skill) => (
                   <div key={skill} className="flex items-center justify-between">
                     <span className="text-gray-700">{skill}</span>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
@@ -347,7 +368,7 @@ const Portfolio = () => {
                 Research & Writing
               </h3>
               <div className="space-y-3">
-                {['Academic Research', 'Essay Writing', 'Scientific Writing', 'Competition Writing', 'Content Creation'].map((skill) => (
+                {['Academic Research', 'Essay Writing', 'Scientific Writing', 'Content Creation'].map((skill) => (
                   <div key={skill} className="flex items-center justify-between">
                     <span className="text-gray-700">{skill}</span>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
@@ -364,7 +385,7 @@ const Portfolio = () => {
                 Soft Skills
               </h3>
               <div className="space-y-3">
-                {['Team Management', 'Project Coordination', 'Communication', 'Event Organization', 'Mentoring'].map((skill) => (
+                {['Team Management', 'Project Coordination', 'Communication', 'Time Management'].map((skill) => (
                   <div key={skill} className="flex items-center justify-between">
                     <span className="text-gray-700">{skill}</span>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
