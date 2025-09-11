@@ -60,9 +60,9 @@ const Portfolio = () => {
       title: "Wifi Dashboard",
       description: "Platform digitalisasi manajemen jaringan wifi untuk Pondok Pesantren Mahasiswa Miftahul Khoirot",
       tech: ["Network Management", "Dashboard UI", "Data Visualization"],
-      category: "Business Solution",
+      category: "project",
       status: "In Development",
-      type: "business project",
+      type: "project personal",
       impact: "Streamlining wifi management and monitoring"
     }
   ];
