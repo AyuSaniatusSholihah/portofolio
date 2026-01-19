@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Heart, Star, Award, Code, Users, ExternalLink, ChevronDown, User } from 'lucide-react';
 
+// Import gambar profile
+import profilePhoto from './assets/projects/FotoNia.jpg';
+
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState(false);
@@ -54,7 +57,6 @@ const Portfolio = () => {
       status: "In Essay Competition and In Development",
       type: "Team Project (Competition)",
       impact: "Inclusive education for students with hearing impairments"
-
     },
     {
       title: "Wifi Dashboard",
@@ -157,8 +159,12 @@ const Portfolio = () => {
           <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
             <div className="text-center py-20">
               <div className="mb-8">
-                <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-pink-200 to-rose-200 flex items-center justify-center text-6xl mb-6 shadow-lg">
-                  🐱
+                <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden shadow-lg">
+                  <img 
+                    src={profilePhoto} 
+                    alt="Ayu Saniatus Sholihah"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h1 className="text-5xl font-bold text-gray-800 mb-4">
                   Hi, I'm <span className="bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Nia!</span>
@@ -260,49 +266,47 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg border border-pink-100 overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-  <div className="bg-gradient-to-r from-pink-100 to-rose-100 p-6">
-    <div className="flex items-center justify-between mb-3">
-      <span className="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-        {project.category}
-      </span>
-      {project.status.includes("Winner") && (
-        <Award className="w-5 h-5 text-yellow-500" />
-      )}
-    </div>
-    <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
-    <p className="text-gray-600 text-sm mb-3">{project.description}</p>
-    <p className="text-pink-600 font-semibold text-sm">{project.status}</p>
+                <div className="bg-gradient-to-r from-pink-100 to-rose-100 p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      {project.category}
+                    </span>
+                    {project.status.includes("Winner") && (
+                      <Award className="w-5 h-5 text-yellow-500" />
+                    )}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
+                  <p className="text-gray-600 text-sm mb-3">{project.description}</p>
+                  <p className="text-pink-600 font-semibold text-sm">{project.status}</p>
 
-    {/* Tambahan: type ditampilkan dengan badge */}
-    <p className="mt-2 inline-block bg-pink-200 text-pink-700 px-3 py-1 rounded-full text-xs font-medium">
-      {project.type}
-    </p>
-  </div>
-  
-  <div className="p-6">
-    <div className="mb-4">
-      <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies</h4>
-      <div className="flex flex-wrap gap-2">
-        {project.tech.map((tech, i) => (
-          <span key={i} className="bg-pink-50 text-pink-600 px-2 py-1 rounded text-xs">
-            {tech}
-          </span>
-        ))}
-      </div>
-    </div>
-    
-    <div className="mb-4">
-      <h4 className="text-sm font-semibold text-gray-700 mb-1">Impact</h4>
-      <p className="text-xs text-gray-600">{project.impact}</p>
-    </div>
-    
-    <button className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white py-2 rounded-lg font-medium hover:shadow-md transition-all duration-300">
-      <ExternalLink className="inline w-4 h-4 mr-1" />
-      Learn More
-    </button>
-  </div>
-</div>
+                  <p className="mt-2 inline-block bg-pink-200 text-pink-700 px-3 py-1 rounded-full text-xs font-medium">
+                    {project.type}
+                  </p>
+                </div>
 
+                <div className="p-6">
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech, i) => (
+                        <span key={i} className="bg-pink-50 text-pink-600 px-2 py-1 rounded text-xs">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-1">Impact</h4>
+                    <p className="text-xs text-gray-600">{project.impact}</p>
+                  </div>
+                  
+                  <button className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white py-2 rounded-lg font-medium hover:shadow-md transition-all duration-300">
+                    <ExternalLink className="inline w-4 h-4 mr-1" />
+                    Learn More
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         </div>
