@@ -74,6 +74,16 @@ const Portfolio = () => {
       link: "https://github.com/AyuSaniatusSholihah/wifi-MK"
     },
     {
+      title: "My Journal",
+      description: "Web journaling app dengan fitur task management, gratitude journaling, dan time blocking untuk produktivitas harian",
+      tech: ["React", "Vite", "Web Development"],
+      category: "project web",
+      status: "In Development",
+      type: "project personal",
+      impact: "Personal productivity and self-reflection tool",
+      link: "https://github.com/AyuSaniatusSholihah/myjournal"
+    },
+    {
       title: "SIM UNS Website",
       description: "Official website for SIM UNS (Sekolah Ilmiah Mahasiswa) organization",
       tech: ["React", "Vite", "SQL database", "Web Development"],
@@ -187,6 +197,11 @@ const Portfolio = () => {
           <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
             <div className="text-center py-20">
               <div className="mb-8">
+                <h1 className="text-5xl font-bold text-gray-800 mb-4">
+                  Hi, I'm <span className="bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Nia!</span>
+                </h1>
+                <p className="text-xl text-gray-600 mb-2">Informatics Student</p>
+                <p className="text-lg text-pink-500 font-medium mb-6">Universitas Sebelas Maret Surakarta</p>
                 <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden shadow-lg">
                   <img 
                     src={profilePhoto} 
@@ -194,11 +209,6 @@ const Portfolio = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h1 className="text-5xl font-bold text-gray-800 mb-4">
-                  Hi, I'm <span className="bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Nia!</span>
-                </h1>
-                <p className="text-xl text-gray-600 mb-2">Informatics Student | Web Developer</p>
-                <p className="text-lg text-pink-500 font-medium">Universitas Sebelas Maret Surakarta</p>
               </div>
               
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-pink-100 max-w-3xl mx-auto mb-8">
