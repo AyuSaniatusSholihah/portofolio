@@ -7,6 +7,7 @@ import profilePhoto from './assets/projects/FotoNia.jpg';
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState(false);
+  const [expandedExp, setExpandedExp] = useState(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -374,15 +375,33 @@ const Portfolio = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             {experiences.map((exp, index) => (
-              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300">
-                <div className="flex items-start justify-between flex-wrap gap-4">
+              <div 
+                key={index} 
+                onClick={() => setExpandedExp(expandedExp === index ? null : index)}
+                className="bg-white rounded-2xl p-8 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 active:scale-100"
+              >
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">{exp.role}</h3>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                      {exp.role}
+                      <ChevronDown 
+                        className={`w-5 h-5 text-pink-400 transition-transform duration-300 ${expandedExp === index ? 'rotate-180' : ''}`} 
+                      />
+                    </h3>
                     <p className="text-pink-500 font-semibold text-lg mb-1">{exp.organization}</p>
                     {exp.department && (
                       <p className="text-rose-400 font-medium mb-3">{exp.department}</p>
                     )}
-                    <p className="text-gray-600 leading-relaxed">{exp.description}</p>
+                    <div 
+                      className={`overflow-hidden transition-all duration-300 ${
+                        expandedExp === index ? 'max-h-96 opacity-100' : 'max-h-20 opacity-70'
+                      }`}
+                    >
+                      <p className="text-gray-600 leading-relaxed">{exp.description}</p>
+                    </div>
+                    {expandedExp !== index && (
+                      <p className="text-pink-400 text-sm mt-2 font-medium">Click to read more...</p>
+                    )}
                   </div>
                   <div className="flex items-center space-x-2">
                     <Users className="w-5 h-5 text-pink-400" />
