@@ -15,7 +15,7 @@ const Portfolio = () => {
   const projects = [
     {
       title: "Hijaiyahku",
-      description: "Platform digital pembelajaran membaca huruf hijaiyah interaktif untuk disabilitas rungu",
+      description: "Interactive digital platform for learning Hijaiyah letters designed for hearing-impaired students",
       tech: ["figma"],
       category: "web design",
       status: "In Development",
@@ -25,7 +25,7 @@ const Portfolio = () => {
     },
     {
       title: "FarmIntel",
-      description: "Platform digital berbasis AI untuk diagnosis penyakit tanaman cabai dan dukungan komunitas petani",
+      description: "AI-based digital platform for chili plant disease diagnosis and farmer community support",
       tech: ["figma"],
       category: "app design",
       status: "In Development",
@@ -35,7 +35,7 @@ const Portfolio = () => {
     },
     {
       title: "E-Shrimp",
-      description: "Platform digitalisasi penjualan udang dan olahan untuk UMKM pesisir",
+      description: "Digital sales platform for shrimp and processed products for coastal SMEs",
       tech: ["html", "css", "javascript", "digital marketing"],
       category: "Business Solution",
       status: "In Essay Competition, In Development",
@@ -45,7 +45,7 @@ const Portfolio = () => {
     },
     {
       title: "FriendYours",
-      description: "Platform digital ruang curhat anonim berbasis chatbot dan dukungan komunitas",
+      description: "Anonymous digital venting platform with chatbot integration and community support features",
       tech: ["React", "AI Chatbot", "Community Features"],
       category: "Frontend",
       status: "In Development",
@@ -55,7 +55,7 @@ const Portfolio = () => {
     },
     {
       title: "Web Math",
-      description: "Media pembelajaran berbasis audiobook Braille dan QR-Integrated Web",
+      description: "Learning media based on Braille audiobook and QR-Integrated Web technology",
       tech: ["QR Code Integration", "Audio Technology", "Fuzzy Machine", "React & Vite"],
       category: "Educational Technology",
       status: "In Essay Competition and In Development",
@@ -65,7 +65,7 @@ const Portfolio = () => {
     },
     {
       title: "Wifi Dashboard",
-      description: "Platform digitalisasi manajemen jaringan wifi untuk Pondok Pesantren Mahasiswa Miftahul Khoirot",
+      description: "Digital wifi network management platform for Pondok Pesantren Mahasiswa Miftahul Khoirot",
       tech: ["Network Management", "Dashboard UI", "Data Visualization"],
       category: "project",
       status: "In Development",
@@ -75,7 +75,7 @@ const Portfolio = () => {
     },
     {
       title: "My Journal",
-      description: "Web journaling app dengan fitur task management, gratitude journaling, dan time blocking untuk produktivitas harian",
+      description: "Web journaling app with task management, gratitude journaling, and time blocking features for daily productivity",
       tech: ["React", "Vite", "Web Development"],
       category: "project web",
       status: "In Development",
