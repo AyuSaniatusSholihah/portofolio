@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, Heart, Star, Award, Code, Users, ExternalLink, ChevronDown, User } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, Star, Award, Code, Users, ExternalLink, ChevronDown, User, BookOpen, PenTool, FileText, Edit, Crown, Calendar, MessageSquare, Clock, Lightbulb } from 'lucide-react';
 
 // Import gambar profile
 import profilePhoto from './assets/projects/FotoNia.jpg';
@@ -20,7 +20,8 @@ const Portfolio = () => {
       category: "web design",
       status: "In Development",
       type: "Team Project",
-      impact: "Supporting SDGs Goal 4: Quality Education"
+      impact: "Supporting SDGs Goal 4: Quality Education",
+      link: "https://drive.google.com/file/d/10k6G0qJbjMl7_NJWOeHn-0O0-EV79m0f/view?usp=drive_link"
     },
     {
       title: "FarmIntel",
@@ -29,7 +30,8 @@ const Portfolio = () => {
       category: "app design",
       status: "In Development",
       type: "Team Project",
-      impact: "Supporting SDGs Goal 2: Zero Hunger"
+      impact: "Supporting SDGs Goal 2: Zero Hunger",
+      link: "https://www.figma.com/design/vnPdzf9G1aQiENdSKXUDQB/AppFarmIntel?node-id=0-1&t=SP8zD30HE4jFoFt2-1"
     },
     {
       title: "E-Shrimp",
@@ -38,7 +40,8 @@ const Portfolio = () => {
       category: "Business Solution",
       status: "In Essay Competition, In Development",
       type: "Team Project (Competition)",
-      impact: "Supporting coastal communities and local SMEs"
+      impact: "Supporting coastal communities and local SMEs",
+      link: "https://github.com/AyuSaniatusSholihah/shrimpzone-uns"
     },
     {
       title: "FriendYours",
@@ -47,7 +50,8 @@ const Portfolio = () => {
       category: "Frontend",
       status: "In Development",
       type: "Team Project",
-      impact: "Supporting SDGs Goal 3: Good Health and Well-being"
+      impact: "Supporting SDGs Goal 3: Good Health and Well-being",
+      link: "https://github.com/Nabil-Fan/prototype-friendyours"
     },
     {
       title: "Web Math",
@@ -56,7 +60,8 @@ const Portfolio = () => {
       category: "Educational Technology",
       status: "In Essay Competition and In Development",
       type: "Team Project (Competition)",
-      impact: "Inclusive education for students with hearing impairments"
+      impact: "Inclusive education for students with hearing impairments",
+      link: "https://github.com/AyuSaniatusSholihah/frontend"
     },
     {
       title: "Wifi Dashboard",
@@ -65,13 +70,36 @@ const Portfolio = () => {
       category: "project",
       status: "In Development",
       type: "project personal",
-      impact: "Streamlining wifi management and monitoring"
+      impact: "Streamlining wifi management and monitoring",
+      link: "https://github.com/AyuSaniatusSholihah/wifi-MK"
+    },
+    {
+      title: "SIM UNS Website",
+      description: "Official website for SIM UNS (Sekolah Ilmiah Mahasiswa) organization",
+      tech: ["React", "Vite", "SQL database", "Web Development"],
+      category: "project web",
+      status: "Coming Soon",
+      type: "Organization Project",
+      impact: "Providing digital presence and information platform for student scientific community",
+      link: "#"
     }
   ];
 
   const experiences = [
+        {
+      role: "Vice Coordinator Secretary FILM 2026",
+      organization: "FILM (Festival Ilmiah Mahasiswa)",
+      department: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
+      description: "Handling all administrative and documentation matters for the scientific festival event and assisting the coordinator"
+    },
+       {
+      role: "Head of Publication and Documentation Division 2026",
+      organization: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
+      department: "Komunikasi Media dan Informasi",
+      description: "Leading the publication and documentation division, managing all SIM social media posts, website content, and media partner coordination"
+    },
     {
-      role: "Staff Member",
+      role: "Staff Member 2026",
       organization: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
       department: "Kompetisi dan Prestasi",
       description: "Supporting student competition participation and achievement tracking, assisting in organizing training and workshops"
@@ -97,7 +125,7 @@ const Portfolio = () => {
     
     
     {
-      role: "WiFi InfrastructuSupportinre Manager",
+      role: "WiFi Infrastructure Supporting Manager",
       organization: "Pondok Pesantren Mahasiswa Miftahul Khoirot",
       description: "Managing technical infrastructure and financial records using Google Spreadsheet and web dashboard for systematic tracking"
     },
@@ -169,7 +197,7 @@ const Portfolio = () => {
                 <h1 className="text-5xl font-bold text-gray-800 mb-4">
                   Hi, I'm <span className="bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Nia!</span>
                 </h1>
-                <p className="text-xl text-gray-600 mb-2">Informatics Student | Web Developer | AI enthusiast</p>
+                <p className="text-xl text-gray-600 mb-2">Informatics Student | Web Developer</p>
                 <p className="text-lg text-pink-500 font-medium">Universitas Sebelas Maret Surakarta</p>
               </div>
               
@@ -202,54 +230,32 @@ const Portfolio = () => {
             About <span className="text-pink-500">Me</span> 🌸
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-                  <Heart className="w-6 h-6 text-pink-500 mr-2" />
-                  My Vision
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  I believe technology should empower people, not replace them. My mission is to create 
-                  inclusive digital solutions that bridge gaps and make a positive impact on society, 
-                  especially for underserved communities.
-                </p>
-              </div>
-              
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-                  <Code className="w-6 h-6 text-pink-500 mr-2" />
-                  Interdisciplinary Skills
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {['Web Development', 'AI Integration', 'Research Writing', 'Academic Essays', 'Competition Entries', 'Scientific Documentation'].map((tech) => (
-                    <span key={tech} className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-medium">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                <Heart className="w-6 h-6 text-pink-500 mr-2" />
+                About Me
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                I'm a 4th semester Informatics student at Universitas Sebelas Maret, passionate about 
+                creating meaningful digital solutions. Through various projects and organizational experiences, 
+                I've developed skills in web development, AI integration, and research writing. I combine 
+                technical expertise with strong leadership and communication abilities to build innovative 
+                solutions that address real-world challenges.
+              </p>
             </div>
-
-            <div className="bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-6">What Drives Me</h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <Star className="w-5 h-5 text-pink-500 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Creating solutions for real-world problems</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Star className="w-5 h-5 text-pink-500 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Supporting local communities through technology</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Star className="w-5 h-5 text-pink-500 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Making education more accessible and inclusive</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Star className="w-5 h-5 text-pink-500 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Promoting sustainable development through innovation</p>
-                </div>
+            
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-pink-100">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+                <Code className="w-6 h-6 text-pink-500 mr-2" />
+                Interdisciplinary Skills
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {['Web Development', 'AI Integration', 'Research Writing', 'Academic Essays', 'Competition Entries', 'Scientific Documentation'].map((tech) => (
+                  <span key={tech} className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-medium">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -288,11 +294,43 @@ const Portfolio = () => {
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies</h4>
                     <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, i) => (
-                        <span key={i} className="bg-pink-50 text-pink-600 px-2 py-1 rounded text-xs">
-                          {tech}
-                        </span>
-                      ))}
+                      {project.tech.map((tech, i) => {
+                        const techIconMap = {
+                          'figma': 'figma',
+                          'React': 'react',
+                          'Vite': 'vite',
+                          'html': 'html',
+                          'css': 'css',
+                          'javascript': 'js',
+                          'digital marketing': null,
+                          'AI Chatbot': 'python',
+                          'Community Features': null,
+                          'QR Code Integration': null,
+                          'Audio Technology': null,
+                          'Fuzzy Machine': 'python',
+                          'React & Vite': 'react,vite',
+                          'Network Management': null,
+                          'Dashboard UI': 'react',
+                          'Data Visualization': 'python',
+                          'SQL database': 'mysql',
+                          'Web Development': 'js',
+                          'Python': 'python'
+                        };
+                        const iconSlug = techIconMap[tech];
+                        
+                        return (
+                          <div key={i} className="flex items-center gap-1 bg-pink-50 text-pink-600 px-2 py-1 rounded text-xs">
+                            {iconSlug && (
+                              <img 
+                                src={`https://go-skill-icons.vercel.app/api/icons?i=${iconSlug}&theme=light`}
+                                alt={tech}
+                                className="w-4 h-4"
+                              />
+                            )}
+                            <span>{tech}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                   
@@ -301,10 +339,15 @@ const Portfolio = () => {
                     <p className="text-xs text-gray-600">{project.impact}</p>
                   </div>
                   
-                  <button className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white py-2 rounded-lg font-medium hover:shadow-md transition-all duration-300">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white py-2 rounded-lg font-medium hover:shadow-md transition-all duration-300 inline-flex items-center justify-center"
+                  >
                     <ExternalLink className="inline w-4 h-4 mr-1" />
                     Learn More
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -319,7 +362,7 @@ const Portfolio = () => {
             My <span className="text-pink-500">Experience</span> 🌟
           </h2>
           
-          <div className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {experiences.map((exp, index) => (
               <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300">
                 <div className="flex items-start justify-between flex-wrap gap-4">
@@ -355,9 +398,23 @@ const Portfolio = () => {
                 Development
               </h3>
               <div className="space-y-3">
-                {['HTML, CSS, JS', 'React & Vite Framework', 'UI/UX Design', 'Database Management'].map((skill) => (
-                  <div key={skill} className="flex items-center justify-between">
-                    <span className="text-gray-700">{skill}</span>
+                {[
+                  { name: 'HTML, CSS, JS', icons: 'html,css,js' },
+                  { name: 'React & Vite', icons: 'react,vite' },
+                  { name: 'Figma & UI/UX', icons: 'figma' },
+                  { name: 'Python', icons: 'python' },
+                  { name: 'Git & GitHub', icons: 'git,github' },
+                  { name: 'SQL Database', icons: 'mysql' }
+                ].map((skill) => (
+                  <div key={skill.name} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <img 
+                        src={`https://go-skill-icons.vercel.app/api/icons?i=${skill.icons}&theme=light`}
+                        alt={skill.name}
+                        className="w-6 h-6"
+                      />
+                      <span className="text-gray-700">{skill.name}</span>
+                    </div>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
                       <div className="h-2 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full w-4/5"></div>
                     </div>
@@ -372,9 +429,17 @@ const Portfolio = () => {
                 Research & Writing
               </h3>
               <div className="space-y-3">
-                {['Academic Research', 'Essay Writing', 'Scientific Writing', 'Content Creation'].map((skill) => (
-                  <div key={skill} className="flex items-center justify-between">
-                    <span className="text-gray-700">{skill}</span>
+                {[
+                  { name: 'Academic Research', icon: BookOpen },
+                  { name: 'Essay Writing', icon: PenTool },
+                  { name: 'Scientific Writing', icon: FileText },
+                  { name: 'Content Creation', icon: Edit }
+                ].map((skill) => (
+                  <div key={skill.name} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <skill.icon className="w-5 h-5 text-pink-400" />
+                      <span className="text-gray-700">{skill.name}</span>
+                    </div>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
                       <div className="h-2 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full w-5/6"></div>
                     </div>
@@ -389,62 +454,25 @@ const Portfolio = () => {
                 Soft Skills
               </h3>
               <div className="space-y-3">
-                {['Team Management', 'Project Coordination', 'Communication', 'Time Management'].map((skill) => (
-                  <div key={skill} className="flex items-center justify-between">
-                    <span className="text-gray-700">{skill}</span>
+                {[
+                  { name: 'Team Leadership', icon: Crown },
+                  { name: 'Project Coordination', icon: Calendar },
+                  { name: 'Communication', icon: MessageSquare },
+                  { name: 'Documentation', icon: FileText },
+                  { name: 'Time Management', icon: Clock },
+                  { name: 'Problem Solving', icon: Lightbulb }
+                ].map((skill) => (
+                  <div key={skill.name} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <skill.icon className="w-5 h-5 text-pink-400" />
+                      <span className="text-gray-700">{skill.name}</span>
+                    </div>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
                       <div className="h-2 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full w-4/5"></div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Goals & Vision */}
-      <section className="py-16 bg-gradient-to-r from-pink-100 to-rose-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-            Future <span className="text-pink-500">Goals</span> 🎯
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-pink-100">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Short-term Goals</h3>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start space-x-3">
-                  <Star className="w-4 h-4 text-pink-500 mt-1 flex-shrink-0" />
-                  <span>Continue competing in technology competitions</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <Star className="w-4 h-4 text-pink-500 mt-1 flex-shrink-0" />
-                  <span>Develop more socially impactful web projects</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <Star className="w-4 h-4 text-pink-500 mt-1 flex-shrink-0" />
-                  <span>Join impactful internship programs in software development</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-pink-100">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Long-term Vision</h3>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start space-x-3">
-                  <Star className="w-4 h-4 text-pink-500 mt-1 flex-shrink-0" />
-                  <span>Continue and further develop the application previously created</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <Star className="w-4 h-4 text-pink-500 mt-1 flex-shrink-0" />
-                  <span>Collaborate with broader and higher-level stakeholders</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <Star className="w-4 h-4 text-pink-500 mt-1 flex-shrink-0" />
-                  <span>Return to the local community to deliver innovation and serve the people</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -463,18 +491,31 @@ const Portfolio = () => {
           
           <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-8 shadow-lg border border-pink-100">
             <div className="flex justify-center space-x-6">
-              <button className="flex items-center space-x-2 bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition-all duration-300 hover:shadow-lg">
+              <a 
+                href="mailto:ayu.saniatus@gmail.com"
+                className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
+              >
                 <Mail className="w-5 h-5" />
                 <span>Email Me</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 transition-all duration-300">
+              </a>
+              <a 
+                href="https://github.com/AyuSaniatusSholihah"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
+              >
                 <Github className="w-5 h-5" />
                 <span>GitHub</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 transition-all duration-300">
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/ayu-saniatus-sholihah-334972272/"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
+              >
                 <Linkedin className="w-5 h-5" />
                 <span>LinkedIn</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -484,7 +525,7 @@ const Portfolio = () => {
       <footer className="bg-gradient-to-r from-pink-500 to-rose-400 text-white py-8">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <p className="text-lg font-medium mb-2">Ayu Saniatus Sholihah</p>
-          <p className="text-pink-100">Informatika Student • Web Developer • Innovation Enthusiast • AI Enthusiast</p>
+          <p className="text-pink-100">Informatika Student • Web Developer</p>
           <p className="text-pink-100 mt-4 text-sm">
             "Technology should empower, not replace" 💕
           </p>
