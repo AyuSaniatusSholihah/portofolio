@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, Heart, Star, Award, Code, Users, ExternalLink, ChevronDown, User, BookOpen, PenTool, FileText, Edit, Crown, Calendar, MessageSquare, Clock, Lightbulb } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, Star, Award, Code, Users, ExternalLink, ChevronDown, User, BookOpen, PenTool, FileText, Edit, Crown, Calendar, MessageSquare, Clock, Lightbulb, Download } from 'lucide-react';
 
 // Import gambar profile
 import profilePhoto from './assets/projects/FotoNia.jpg';
@@ -8,6 +8,8 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState(false);
   const [expandedExp, setExpandedExp] = useState(null);
+
+  const resumeLink = 'https://drive.google.com/file/d/1V6pJ5puwtmDGhg2WBI45IYzaty-1NRor/view?usp=sharing';
 
   useEffect(() => {
     setIsVisible(true);
@@ -203,11 +205,11 @@ const Portfolio = () => {
                 </h1>
                 <p className="text-xl text-gray-600 mb-2">Informatics Student</p>
                 <p className="text-lg text-pink-500 font-medium mb-6">Universitas Sebelas Maret Surakarta</p>
-                <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden shadow-lg">
+                <div className="w-32 h-32 mx-auto mt-3 rounded-full bg-gradient-to-r from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden shadow-lg">
                   <img 
                     src={profilePhoto} 
                     alt="Ayu Saniatus Sholihah"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
               </div>
@@ -219,7 +221,7 @@ const Portfolio = () => {
                 </p>
               </div>
 
-              <div className="flex justify-center space-x-4">
+              <div className="flex flex-wrap justify-center gap-4">
                 <button className="bg-gradient-to-r from-pink-500 to-rose-400 text-white px-8 py-3 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-300">
                   <Mail className="inline w-4 h-4 mr-2" />
                   Get in Touch
@@ -228,6 +230,15 @@ const Portfolio = () => {
                   <Github className="inline w-4 h-4 mr-2" />
                   View Work
                 </button>
+                <a
+                  href={resumeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="border-2 border-pink-300 text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition-all duration-300 inline-flex items-center"
+                >
+                  <Download className="inline w-4 h-4 mr-2" />
+                  Download Resume
+                </a>
               </div>
             </div>
           </div>
@@ -519,7 +530,7 @@ const Portfolio = () => {
           </p>
           
           <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-8 shadow-lg border border-pink-100">
-            <div className="flex justify-center space-x-6">
+            <div className="flex flex-wrap justify-center gap-4">
               <a 
                 href="mailto:ayu.saniatus@gmail.com"
                 className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
@@ -544,6 +555,15 @@ const Portfolio = () => {
               >
                 <Linkedin className="w-5 h-5" />
                 <span>LinkedIn</span>
+              </a>
+              <a
+                href={resumeLink}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
+              >
+                <FileText className="w-5 h-5" />
+                <span>My Resume</span>
               </a>
             </div>
           </div>
