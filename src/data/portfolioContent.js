@@ -120,7 +120,7 @@ export const portfolioContent = {
       role: 'Talent website development in Fatisda Student Development',
       organization: 'FATISDA UNS',
       department: 'Webdev',
-      start: 'Januari 2026',
+      start: 'Maret 2026',
       end: 'Present',
       description: 'Contributing to website development for prospective clients',
     },
