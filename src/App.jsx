@@ -1,172 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Github, Linkedin, Mail, Heart, Star, Award, Code, Users, ExternalLink, ChevronDown, User, BookOpen, PenTool, FileText, Edit, Crown, Calendar, MessageSquare, Clock, Lightbulb, Download } from 'lucide-react';
 
-// Import gambar profile
-import profilePhoto from './assets/projects/FotoNia.jpg';
+import { portfolioContent } from './data/portfolioContent.js';
+import { usePortfolio } from './hooks/usePortfolio.js';
 
 const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isVisible, setIsVisible] = useState(false);
-  const [expandedExp, setExpandedExp] = useState(null);
-
-  const resumeLink = 'https://drive.google.com/file/d/1V6pJ5puwtmDGhg2WBI45IYzaty-1NRor/view?usp=sharing';
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const projects = [
-    {
-      title: "Hijaiyahku",
-      description: "Interactive digital platform for learning Hijaiyah letters designed for hearing-impaired students",
-      tech: ["figma"],
-      category: "web design",
-      status: "In Development",
-      type: "Team Project",
-      impact: "Supporting SDGs Goal 4: Quality Education",
-      link: "https://drive.google.com/file/d/10k6G0qJbjMl7_NJWOeHn-0O0-EV79m0f/view?usp=drive_link"
-    },
-    {
-      title: "FarmIntel",
-      description: "AI-based digital platform for chili plant disease diagnosis and farmer community support",
-      tech: ["figma"],
-      category: "app design",
-      status: "In Development",
-      type: "Team Project",
-      impact: "Supporting SDGs Goal 2: Zero Hunger",
-      link: "https://www.figma.com/design/vnPdzf9G1aQiENdSKXUDQB/AppFarmIntel?node-id=0-1&t=SP8zD30HE4jFoFt2-1"
-    },
-    {
-      title: "E-Shrimp",
-      description: "Digital sales platform for shrimp and processed products for coastal SMEs",
-      tech: ["html", "css", "javascript", "digital marketing"],
-      category: "Business Solution",
-      status: "In Essay Competition, In Development",
-      type: "Team Project (Competition)",
-      impact: "Supporting coastal communities and local SMEs",
-      link: "https://github.com/AyuSaniatusSholihah/shrimpzone-uns"
-    },
-    {
-      title: "FriendYours",
-      description: "Anonymous digital venting platform with chatbot integration and community support features",
-      tech: ["React", "AI Chatbot", "Community Features"],
-      category: "Frontend",
-      status: "In Development",
-      type: "Team Project",
-      impact: "Supporting SDGs Goal 3: Good Health and Well-being",
-      link: "https://github.com/Nabil-Fan/prototype-friendyours"
-    },
-    {
-      title: "Web Math",
-      description: "Learning media based on Braille audiobook and QR-Integrated Web technology",
-      tech: ["QR Code Integration", "Audio Technology", "Fuzzy Machine", "React & Vite"],
-      category: "Educational Technology",
-      status: "In Essay Competition and In Development",
-      type: "Team Project (Competition)",
-      impact: "Inclusive education for students with hearing impairments",
-      link: "https://github.com/AyuSaniatusSholihah/frontend"
-    },
-    {
-      title: "Wifi Dashboard",
-      description: "Digital wifi network management platform for Pondok Pesantren Mahasiswa Miftahul Khoirot",
-      tech: ["Network Management", "Dashboard UI", "Data Visualization"],
-      category: "project",
-      status: "In Development",
-      type: "project personal",
-      impact: "Streamlining wifi management and monitoring",
-      link: "https://github.com/AyuSaniatusSholihah/wifi-MK"
-    },
-    {
-      title: "My Journal",
-      description: "Web journaling app with task management, gratitude journaling, and time blocking features for daily productivity",
-      tech: ["React", "Vite", "Web Development"],
-      category: "project web",
-      status: "In Development",
-      type: "project personal",
-      impact: "Personal productivity and self-reflection tool",
-      link: "https://github.com/AyuSaniatusSholihah/myjournal"
-    },
-    {
-      title: "SIM UNS Website",
-      description: "Official website for SIM UNS (Sekolah Ilmiah Mahasiswa) organization",
-      tech: ["React", "Vite", "SQL database", "Web Development"],
-      category: "project web",
-      status: "Coming Soon",
-      type: "Organization Project",
-      impact: "Providing digital presence and information platform for student scientific community",
-      link: "#"
-    }
-  ];
-
-  const experiences = [
-        {
-      role: "Vice Coordinator Secretary FILM 2026",
-      organization: "FILM (Festival Ilmiah Mahasiswa)",
-      department: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
-      description: "Handling all administrative and documentation matters for the scientific festival event and assisting the coordinator"
-    },
-       {
-      role: "Head of Publication and Documentation Division 2026",
-      organization: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
-      department: "Komunikasi Media dan Informasi",
-      description: "Leading the publication and documentation division, managing all SIM social media posts, website content, and media partner coordination"
-    },
-    {
-      role: "Staff Member 2026",
-      organization: "SIM UNS (Sekolah Ilmiah Mahasiswa)",
-      department: "Kompetisi dan Prestasi",
-      description: "Supporting student competition participation and achievement tracking, assisting in organizing training and workshops"
-    },
-    {
-      role: "Secretary",
-      organization: "SKILL PAB (Open Recruitment Event)",
-      department: "SIM UNS",
-      description: "Handling administrative processes for new student recruitment event, managing documentation and coordination"
-    },
-    {
-      role: "Vice Secretary Division",
-      organization: "AKSI (Agenda Kegiatan Studi Banding)",
-      department: "SIM UNS with FST UNDIP",
-      description: "Assisting in secretariat duties for inter-university study event, coordinating schedules helping to find venues"
-    },
-    {
-      role: "Head of Secretary Division",
-      organization: "PKS (Pekan Keluarga SIM)",
-      department: "SIM UNS Event",
-      description: "Leading secretariat operations for major SIM family week event, coordinating documentation and administrative processes"
-    },
-    
-    
-    {
-      role: "WiFi Infrastructure Supporting Manager",
-      organization: "Pondok Pesantren Mahasiswa Miftahul Khoirot",
-      description: "Managing technical infrastructure and financial records using Google Spreadsheet and web dashboard for systematic tracking"
-    },
-    {
-      role: "Facilities and Infrastructure Division",
-      organization: "Pondok Pesantren Mahasiswa Miftahul Khoirot",
-      description: "Oversee facility management and infrastructure development projects and summarize everything in a google spreadsheet."
-    },
-    {
-      role: "Student Council Member",
-      organization: "Dewan Ambalan",
-      department: "Scouting Organization (High School)",
-      description: "Active in scouting leadership development, organizing community service and character building programs"
-    },
-    {
-      role: "Research Club Member",
-      organization: "KIR (Karya Ilmiah Remaja)",
-      department: "High School Extracurricular",
-      description: "Developing research and scientific writing skills, participating in student research competitions and academic writing contests"
-    },
-   
-  ];
-
-  const scrollToSection = (sectionId) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { activeSection, expandedExp, isVisible, scrollToSection, setExpandedExp } = usePortfolio();
+  const { aboutSkills, contactLinks, experiences, navSections, profilePhoto, projects, resumeLink, skillGroups, techIconMap } = portfolioContent;
+  const researchIconMap = { BookOpen, PenTool, FileText, Edit };
+  const softSkillIconMap = { Crown, Calendar, MessageSquare, FileText, Clock, Lightbulb };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
@@ -178,7 +20,7 @@ const Portfolio = () => {
               Ayu Saniatus Sholihah ✨
             </div>
             <div className="hidden md:flex space-x-8">
-              {['home', 'about', 'projects', 'experience'].map((section) => (
+              {navSections.map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -273,7 +115,7 @@ const Portfolio = () => {
                 Interdisciplinary Skills
               </h3>
               <div className="flex flex-wrap gap-2">
-                {['Web Development', 'AI Integration', 'Research Writing', 'Academic Essays', 'Competition Entries', 'Scientific Documentation'].map((tech) => (
+                {aboutSkills.map((tech) => (
                   <span key={tech} className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-medium">
                     {tech}
                   </span>
@@ -317,27 +159,6 @@ const Portfolio = () => {
                     <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech, i) => {
-                        const techIconMap = {
-                          'figma': 'figma',
-                          'React': 'react',
-                          'Vite': 'vite',
-                          'html': 'html',
-                          'css': 'css',
-                          'javascript': 'js',
-                          'digital marketing': null,
-                          'AI Chatbot': 'python',
-                          'Community Features': null,
-                          'QR Code Integration': null,
-                          'Audio Technology': null,
-                          'Fuzzy Machine': 'python',
-                          'React & Vite': 'react,vite',
-                          'Network Management': null,
-                          'Dashboard UI': 'react',
-                          'Data Visualization': 'python',
-                          'SQL database': 'mysql',
-                          'Web Development': 'js',
-                          'Python': 'python'
-                        };
                         const iconSlug = techIconMap[tech];
                         
                         return (
@@ -438,14 +259,7 @@ const Portfolio = () => {
                 Development
               </h3>
               <div className="space-y-3">
-                {[
-                  { name: 'HTML, CSS, JS', icons: 'html,css,js' },
-                  { name: 'React & Vite', icons: 'react,vite' },
-                  { name: 'Figma & UI/UX', icons: 'figma' },
-                  { name: 'Python', icons: 'python' },
-                  { name: 'Git & GitHub', icons: 'git,github' },
-                  { name: 'SQL Database', icons: 'mysql' }
-                ].map((skill) => (
+                {skillGroups.development.map((skill) => (
                   <div key={skill.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <img 
@@ -469,22 +283,21 @@ const Portfolio = () => {
                 Research & Writing
               </h3>
               <div className="space-y-3">
-                {[
-                  { name: 'Academic Research', icon: BookOpen },
-                  { name: 'Essay Writing', icon: PenTool },
-                  { name: 'Scientific Writing', icon: FileText },
-                  { name: 'Content Creation', icon: Edit }
-                ].map((skill) => (
+                {skillGroups.research.map((skill) => {
+                  const Icon = researchIconMap[skill.icon];
+
+                  return (
                   <div key={skill.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <skill.icon className="w-5 h-5 text-pink-400" />
+                      <Icon className="w-5 h-5 text-pink-400" />
                       <span className="text-gray-700">{skill.name}</span>
                     </div>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
                       <div className="h-2 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full w-5/6"></div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -494,24 +307,21 @@ const Portfolio = () => {
                 Soft Skills
               </h3>
               <div className="space-y-3">
-                {[
-                  { name: 'Team Leadership', icon: Crown },
-                  { name: 'Project Coordination', icon: Calendar },
-                  { name: 'Communication', icon: MessageSquare },
-                  { name: 'Documentation', icon: FileText },
-                  { name: 'Time Management', icon: Clock },
-                  { name: 'Problem Solving', icon: Lightbulb }
-                ].map((skill) => (
+                {skillGroups.softSkills.map((skill) => {
+                  const Icon = softSkillIconMap[skill.icon];
+
+                  return (
                   <div key={skill.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <skill.icon className="w-5 h-5 text-pink-400" />
+                      <Icon className="w-5 h-5 text-pink-400" />
                       <span className="text-gray-700">{skill.name}</span>
                     </div>
                     <div className="w-20 h-2 bg-pink-100 rounded-full">
                       <div className="h-2 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full w-4/5"></div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -532,14 +342,14 @@ const Portfolio = () => {
           <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-8 shadow-lg border border-pink-100">
             <div className="flex flex-wrap justify-center gap-4">
               <a 
-                href="mailto:ayu.saniatus@gmail.com"
+                href={contactLinks.email}
                 className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
               >
                 <Mail className="w-5 h-5" />
                 <span>Email Me</span>
               </a>
               <a 
-                href="https://github.com/AyuSaniatusSholihah"
+                href={contactLinks.github}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
@@ -548,7 +358,7 @@ const Portfolio = () => {
                 <span>GitHub</span>
               </a>
               <a 
-                href="https://www.linkedin.com/in/ayu-saniatus-sholihah-334972272/"
+                href={contactLinks.linkedin}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center space-x-2 bg-white text-pink-500 border-2 border-pink-500 px-6 py-3 rounded-full hover:bg-pink-50 active:scale-95 transition-all duration-300"
