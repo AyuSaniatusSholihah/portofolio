@@ -1,0 +1,53 @@
+@layer components {
+	[data-reveal] {
+		opacity: 0;
+		transform: translateY(24px);
+		transition:
+			opacity 700ms ease,
+			transform 700ms ease,
+			box-shadow 300ms ease,
+			border-color 300ms ease;
+		transition-delay: var(--reveal-delay, 0ms);
+	}
+
+	[data-reveal='true'] {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.nav-link-button {
+		transition:
+			transform 220ms ease,
+			color 220ms ease,
+			background-color 220ms ease,
+			box-shadow 220ms ease;
+	}
+
+	.nav-link-button:hover {
+		transform: translateY(-2px);
+	}
+
+	.nav-link-button:active,
+	.action-button:active,
+	.card-press:active,
+	.floating-action:active {
+		transform: translateY(1px) scale(0.98);
+	}
+
+	.action-button,
+	.card-press,
+	.floating-action {
+		transition:
+			transform 220ms ease,
+			box-shadow 220ms ease,
+			background-color 220ms ease,
+			border-color 220ms ease,
+			color 220ms ease;
+	}
+
+	.action-button:hover,
+	.card-press:hover,
+	.floating-action:hover {
+		transform: translateY(-3px);
+	}
+}
