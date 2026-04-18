@@ -21,7 +21,6 @@
 			color 220ms ease,
 			background-color 220ms ease,
 			box-shadow 220ms ease;
-		cursor: pointer;
 	}
 
 	.nav-link-button:hover {
@@ -44,7 +43,6 @@
 			background-color 220ms ease,
 			border-color 220ms ease,
 			color 220ms ease;
-		cursor: pointer;
 	}
 
 	.action-button:hover,
