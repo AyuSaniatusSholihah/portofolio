@@ -96,7 +96,17 @@ export const portfolioContent = {
       status: 'Coming Soon',
       type: 'Organization Project',
       impact: 'Providing digital presence and information platform for student scientific community',
-      link: '#',
+      link: 'https://sim.uns.ac.id',
+    },
+     {
+      title: 'web revitalisasi bank sampah',
+      description: 'PPKO SIM UNS Project',
+      tech: ['React', 'Vite'],
+      category: 'project web',
+      status: 'Front end, final',
+      type: 'Team Project',
+      impact: 'Supporting SDGs Goal 12: Responsible Consumption and Production',
+      link: 'https://cointrash-five.vercel.app/',
     },
   ],
   experiences: [
