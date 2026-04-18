@@ -224,6 +224,11 @@ const Portfolio = () => {
                     {exp.department && (
                       <p className="text-rose-400 font-medium mb-3">{exp.department}</p>
                     )}
+                    {exp.start && exp.end && (
+                      <p className="text-gray-500 text-sm mb-3">
+                        {exp.start} - {exp.end}
+                      </p>
+                    )}
                     <div 
                       className={`overflow-hidden transition-all duration-300 ${
                         expandedExp === index ? 'max-h-96 opacity-100' : 'max-h-20 opacity-70'
