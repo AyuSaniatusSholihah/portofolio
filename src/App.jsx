@@ -7,7 +7,7 @@ import { usePortfolio } from './hooks/usePortfolio.js';
 import { useScrollReveal } from './hooks/useScrollReveal.js';
 
 const Portfolio = () => {
-  const { activeSection, expandedExp, isVisible, scrollToSection, setExpandedExp } = usePortfolio();
+  const { activeSection, expandedExp, isVisible, scrollToSection, setExpandedExp } = usePortfolio(portfolioContent.navSections);
   const { aboutSkills, contactLinks, experiences, navSections, profilePhoto, projects, resumeLink, skillGroups, techIconMap } = portfolioContent;
   const researchIconMap = { BookOpen, PenTool, FileText, Edit };
   const softSkillIconMap = { Crown, Calendar, MessageSquare, FileText, Clock, Lightbulb };
@@ -28,7 +28,7 @@ const Portfolio = () => {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`nav-link-button capitalize font-medium ${
+                  className={`nav-link-button capitalize font-medium cursor-pointer ${
                     activeSection === section ? 'text-sky-400' : 'text-slate-300'
                   }`}
                 >
@@ -72,14 +72,14 @@ const Portfolio = () => {
                   href={contactLinks.email}
                   target="_blank"
                   rel="noreferrer"
-                  className="action-button inline-flex items-center bg-gradient-to-r from-sky-600 to-blue-800 text-white px-8 py-3 rounded-full font-medium hover:shadow-xl hover:shadow-sky-900/20 transform hover:-translate-y-1 active:scale-95"
+                  className="action-button inline-flex items-center bg-gradient-to-r from-sky-600 to-blue-800 text-white px-8 py-3 rounded-full font-medium cursor-pointer hover:shadow-xl hover:shadow-sky-900/20 transform hover:-translate-y-1 active:scale-95"
                 >
                   <Mail className="inline w-4 h-4 mr-2" />
                   Get in Touch
                 </a>
                 <a
                   href="#projects"
-                  className="action-button inline-flex items-center border-2 border-sky-300 text-sky-700 px-8 py-3 rounded-full font-medium hover:bg-sky-50 hover:shadow-md active:scale-95"
+                  className="action-button inline-flex items-center border-2 border-sky-300 text-sky-700 px-8 py-3 rounded-full font-medium cursor-pointer hover:bg-sky-50 hover:shadow-md active:scale-95"
                 >
                   <Github className="inline w-4 h-4 mr-2" />
                   View Work
@@ -88,7 +88,7 @@ const Portfolio = () => {
                   href={resumeLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="action-button border-2 border-sky-300 text-sky-700 px-8 py-3 rounded-full font-medium hover:bg-sky-50 hover:shadow-md inline-flex items-center active:scale-95"
+                  className="action-button border-2 border-sky-300 text-sky-700 px-8 py-3 rounded-full font-medium cursor-pointer hover:bg-sky-50 hover:shadow-md inline-flex items-center active:scale-95"
                 >
                   <Download className="inline w-4 h-4 mr-2" />
                   Download Resume
@@ -147,7 +147,7 @@ const Portfolio = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <div key={index} className="card-press bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-2xl" data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}>
+              <div key={index} className="card-press cursor-pointer bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-2xl" data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}>
                 <div className="bg-gradient-to-r from-slate-900 to-sky-900 p-6 text-white">
                   <div className="flex items-center justify-between mb-3">
                     <span className="bg-white/15 text-white px-3 py-1 rounded-full text-sm font-medium border border-white/20">
@@ -198,7 +198,7 @@ const Portfolio = () => {
                     href={project.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="action-button w-full bg-gradient-to-r from-sky-600 to-blue-800 text-white py-2 rounded-lg font-medium hover:shadow-lg hover:shadow-sky-900/20 inline-flex items-center justify-center active:scale-95"
+                    className="action-button w-full bg-gradient-to-r from-sky-600 to-blue-800 text-white py-2 rounded-lg font-medium cursor-pointer hover:shadow-lg hover:shadow-sky-900/20 inline-flex items-center justify-center active:scale-95"
                   >
                     <ExternalLink className="inline w-4 h-4 mr-1" />
                     Learn More
@@ -413,7 +413,7 @@ const Portfolio = () => {
       {/* Floating Action Button */}
       <button 
         onClick={() => scrollToSection('home')}
-        className="floating-action fixed bottom-8 right-8 bg-gradient-to-r from-sky-600 to-blue-800 text-white p-4 rounded-full shadow-lg hover:shadow-2xl hover:shadow-sky-900/20 transform hover:-translate-y-1"
+        className="floating-action fixed bottom-8 right-8 bg-gradient-to-r from-sky-600 to-blue-800 text-white p-4 rounded-full shadow-lg hover:shadow-2xl hover:shadow-sky-900/20 transform hover:-translate-y-1 cursor-pointer"
       >
         <ChevronDown className="w-5 h-5 transform rotate-180" />
       </button>
