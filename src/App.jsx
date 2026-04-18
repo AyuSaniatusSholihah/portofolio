@@ -68,14 +68,22 @@ const Portfolio = () => {
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <button className="action-button bg-gradient-to-r from-sky-600 to-blue-800 text-white px-8 py-3 rounded-full font-medium hover:shadow-xl hover:shadow-sky-900/20 transform hover:-translate-y-1 active:scale-95">
+                <a
+                  href={contactLinks.email}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="action-button inline-flex items-center bg-gradient-to-r from-sky-600 to-blue-800 text-white px-8 py-3 rounded-full font-medium hover:shadow-xl hover:shadow-sky-900/20 transform hover:-translate-y-1 active:scale-95"
+                >
                   <Mail className="inline w-4 h-4 mr-2" />
                   Get in Touch
-                </button>
-                <button className="action-button border-2 border-sky-300 text-sky-700 px-8 py-3 rounded-full font-medium hover:bg-sky-50 hover:shadow-md active:scale-95">
+                </a>
+                <a
+                  href="#projects"
+                  className="action-button inline-flex items-center border-2 border-sky-300 text-sky-700 px-8 py-3 rounded-full font-medium hover:bg-sky-50 hover:shadow-md active:scale-95"
+                >
                   <Github className="inline w-4 h-4 mr-2" />
                   View Work
-                </button>
+                </a>
                 <a
                   href={resumeLink}
                   target="_blank"
