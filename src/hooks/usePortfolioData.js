@@ -13,7 +13,9 @@ export function getStoredPortfolioData() {
       return {
         ...defaultContent,
         ...parsed,
-        // Always ensure latest tech stack definitions from defaultContent take effect
+        // Always ensure latest tech stack definitions and nav structure from defaultContent take effect
+        navSections: defaultContent.navSections,
+        stories: defaultContent.stories,
         techStackCategories: defaultContent.techStackCategories,
         educationHistory: defaultContent.educationHistory,
         // Preserve assets / objects that shouldn't be overridden if missing

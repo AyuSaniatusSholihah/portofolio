@@ -836,33 +836,11 @@ const App = () => {
           </div>
         </section>
 
-        {/* ================= 06 CERITA NIA ================= */}
-        <section id="stories" className="space-y-8 scroll-mt-28" data-reveal>
-          {/* Section Number Header */}
-          <div>
-            <span className="text-sm font-bold text-sky-400 tracking-wider">06</span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
-              CERITA NIA
-            </h2>
-            <p className="text-slate-400 text-sm mt-1 max-w-xl">
-              My thoughts, learnings, experiences, and little stories along the way in technology and college life.
-            </p>
-          </div>
-
-          <CeritaNiaInteractive
-            stories={stories}
-            onSeeMore={() => {
-              window.location.hash = '/stories';
-              setCurrentView('stories');
-            }}
-          />
-        </section>
-
-        {/* ================= 07 CONTACT ================= */}
+        {/* ================= 06 CONTACT ================= */}
         <section id="contact" className="space-y-8 scroll-mt-28" data-reveal>
           {/* Section Number Header - Centered */}
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-sm font-bold text-sky-400 tracking-wider">07</span>
+            <span className="text-sm font-bold text-sky-400 tracking-wider">06</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
               CONTACT
             </h2>
