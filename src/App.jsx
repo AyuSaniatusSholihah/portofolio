@@ -462,7 +462,7 @@ const App = () => {
                 </div>
 
                 {/* Floating Badge 1: Specialty (Top-Left) - Soft Glassmorphism */}
-                <div className="absolute top-[3%] -left-2 sm:-left-6 bg-slate-900/70 backdrop-blur-2xl px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-2 sm:gap-2.5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-30 hover:scale-105 transition-transform">
+                <div className="absolute top-[4%] sm:top-[22%] -left-2 sm:-left-6 bg-slate-900/70 backdrop-blur-2xl px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-2 sm:gap-2.5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-30 hover:scale-105 transition-transform">
                   <div className="p-1 sm:p-1.5 rounded-xl bg-blue-500/20 text-sky-400 border border-blue-500/30 shrink-0">
                     <Code className="w-3.5 h-3.5" />
                   </div>
@@ -556,30 +556,9 @@ const App = () => {
             </span>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-            {/* Left Mini Photo Card - Hidden on Mobile, Visible on Desktop */}
-            <div className="hidden lg:flex lg:col-span-4 glow-card p-4 rounded-3xl border border-white/10 relative overflow-hidden flex-col items-center justify-between text-center">
-              <div className="w-full h-72 sm:h-80 md:h-84 rounded-2xl overflow-hidden relative bg-slate-950/60">
-                <img
-                  src={aboutPhoto || profilePhoto}
-                  alt={name}
-                  className="w-full h-full object-cover object-[center_top] scale-[1.03] transition-transform duration-500 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
-              </div>
-              <div className="pt-3.5 flex items-center justify-between w-full px-2">
-                <div className="text-left">
-                  <p className="text-sm font-bold text-white">Ayu Saniatus S.</p>
-                  <p className="text-xs text-pink-400">Informatics UNS</p>
-                </div>
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/20">
-                  Active
-                </span>
-              </div>
-            </div>
-
-            {/* Middle Main Bio & Counters */}
-            <div className="lg:col-span-4 glow-card p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+            {/* Main Bio & Counters */}
+            <div className="glow-card p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <h3 className="text-xl sm:text-2xl font-bold text-white">
                   Curious mind. <br />
@@ -607,31 +586,43 @@ const App = () => {
               </div>
             </div>
 
-            {/* Right: Academic Status Card */}
-            <div className="lg:col-span-4 glow-card p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-                <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
-                  <GraduationCap className="w-5 h-5" />
+            {/* Academic Status Card */}
+            <div className="glow-card p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+                  <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
+                    <GraduationCap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white font-heading">
+                      Academic Background
+                    </h3>
+                    <p className="text-xs text-slate-400">Universitas Sebelas Maret (UNS)</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-white font-heading">
-                    Academic Background
-                  </h3>
-                  <p className="text-xs text-slate-400">Universitas Sebelas Maret (UNS)</p>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                    <p className="text-xs text-slate-400">Study Program</p>
+                    <p className="text-sm font-semibold text-slate-200">Informatics (S1)</p>
+                    <p className="text-[11px] text-sky-400">2024 – Present</p>
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                    <p className="text-xs text-slate-400">Level</p>
+                    <p className="text-sm font-semibold text-slate-200">Second Year</p>
+                    <p className="text-[11px] text-pink-400">Undergraduate</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <p className="text-xs text-slate-400">Study Program</p>
-                  <p className="text-sm font-semibold text-slate-200">Informatics (S1)</p>
-                  <p className="text-[11px] text-sky-400">2024 – Present</p>
-                </div>
-                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <p className="text-xs text-slate-400">Level</p>
-                  <p className="text-sm font-semibold text-slate-200">Second Year</p>
-                  <p className="text-[11px] text-pink-400">Undergraduate</p>
-                </div>
+              <div className="pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-pink-400" />
+                  Surakarta, Indonesia
+                </span>
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/20">
+                  Active Student
+                </span>
               </div>
             </div>
           </div>
