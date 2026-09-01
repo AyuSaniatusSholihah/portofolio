@@ -109,6 +109,7 @@ const App = () => {
     projects,
     techStackCategories,
     stories,
+    educationHistory,
   } = content;
 
   // Filter projects by categoryGroup: 'Projek Kuliah' | 'Projek Lomba' | 'Projek Real'
@@ -327,7 +328,7 @@ const App = () => {
                   <span className="text-pink-500 inline-block">.</span>
                 </h1>
                 <p className="mt-2 text-sm sm:text-base text-slate-300 font-medium">
-                  Informatics Student · Builder · Learner ·{' '}
+                  ML Enthusiast · Web Developer ·{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-amber-300 font-semibold">
                     Creative Technologist
                   </span>
@@ -524,8 +525,8 @@ const App = () => {
               </>
             }
             tags={[
-              { text: 'Informatics UNS', background: '#0284c7', color: '#ffffff' },
-              { text: 'Frontend & UI/UX', background: '#db2777', color: '#ffffff' },
+              { text: 'ML Enthusiast', background: '#0284c7', color: '#ffffff' },
+              { text: 'Web Developer', background: '#db2777', color: '#ffffff' },
               { text: 'Creative Tech', background: '#4f46e5', color: '#ffffff' },
               { text: 'Always Learning', background: '#10b981', color: '#ffffff' },
             ]}
@@ -586,42 +587,111 @@ const App = () => {
               </div>
             </div>
 
-            {/* Academic Status Card */}
-            <div className="glow-card p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-                  <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="w-5 h-5" />
+            {/* Academic & Educational Background Card */}
+            <div className="glow-card p-5 sm:p-7 rounded-3xl border border-white/10 flex flex-col justify-between space-y-5 bg-gradient-to-b from-[#0e1324]/90 to-[#070913]/95">
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
+                      <GraduationCap className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-white font-heading">
+                        Education & Background
+                      </h3>
+                      <p className="text-xs text-slate-400">Riwayat Akademik & Aktivitas</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-white font-heading">
-                      Academic Background
-                    </h3>
-                    <p className="text-xs text-slate-400">Universitas Sebelas Maret (UNS)</p>
-                  </div>
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-sky-500/10 text-sky-300 border border-sky-500/20">
+                    2 Institusi
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                    <p className="text-xs text-slate-400">Study Program</p>
-                    <p className="text-sm font-semibold text-slate-200">Informatics (S1)</p>
-                    <p className="text-[11px] text-sky-400">2024 – Present</p>
+                {/* Education List */}
+                <div className="space-y-3.5">
+                  {/* 1. Higher Education: UNS */}
+                  <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-500/30 transition-all space-y-2 group">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h4 className="text-sm font-bold text-white group-hover:text-sky-300 transition-colors">
+                            Universitas Sebelas Maret (UNS)
+                          </h4>
+                          <span className="px-2 py-0.5 rounded-md text-[9px] font-semibold bg-sky-500/15 text-sky-300 border border-sky-500/30">
+                            Pendidikan Tinggi
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-300 font-medium mt-0.5">
+                          S1 Informatika 
+                        </p>
+                      </div>
+                      <span className="text-[11px] font-bold text-sky-400 whitespace-nowrap bg-sky-500/10 px-2 py-0.5 rounded-full border border-sky-500/20">
+                        2024 – Sekarang
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px] text-slate-400">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-900/80 border border-slate-700/60 text-slate-300">
+                        <MapPin className="w-2.5 h-2.5 text-pink-400" />
+                        <span>Surakarta, ID</span>
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md bg-slate-900/80 border border-slate-700/60 text-slate-300">
+                        Undergraduate (Year 3)
+                      </span>
+                    
+                    </div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                    <p className="text-xs text-slate-400">Level</p>
-                    <p className="text-sm font-semibold text-slate-200">Second Year</p>
-                    <p className="text-[11px] text-pink-400">Undergraduate</p>
+
+                  {/* 2. High School: MAN 2 Kudus */}
+                  <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/30 transition-all space-y-2 group">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h4 className="text-sm font-bold text-white group-hover:text-pink-300 transition-colors">
+                            MAN 2 Kudus
+                          </h4>
+                
+                        </div>
+                        <p className="text-xs text-slate-300 font-medium mt-0.5">
+                          Program BCS (Bilingual Class Science) Boarding Schooll
+                        </p>
+                      </div>
+                      <span className="text-[11px] font-bold text-pink-400 whitespace-nowrap bg-pink-500/10 px-2 py-0.5 rounded-full border border-pink-500/20">
+                        2021 – 2024 (Lulus)
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-slate-400 font-medium">
+                      Rekam Jejak:
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 text-[10px]">
+                      <span className="px-2 py-0.5 rounded-md bg-pink-950/40 border border-pink-500/30 text-pink-200 inline-flex items-center gap-1 font-medium">
+                        🔬 Ekskul KIR (Kelompok Ilmiah Remaja)
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md bg-sky-950/40 border border-sky-500/30 text-sky-200 inline-flex items-center gap-1 font-medium">
+                        📝 Perlombaan KTI (Karya Tulis Ilmiah)
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md bg-amber-950/40 border border-amber-500/30 text-amber-200 inline-flex items-center gap-1 font-medium">
+                        ⛺ Organisasi Pramuka
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md bg-emerald-950/40 border border-emerald-500/30 text-emerald-200 inline-flex items-center gap-1 font-medium">
+                        🏸 Perlombaan Bulutangkis
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
-                <span className="flex items-center gap-1.5">
+              {/* Bottom Footer Status */}
+              <div className="pt-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+                <span className="flex items-center gap-1.5 text-[11px]">
                   <MapPin className="w-3.5 h-3.5 text-pink-400" />
                   Surakarta, Indonesia
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/20">
-                  Active Student
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Active Informatics Student
                 </span>
               </div>
             </div>
@@ -760,18 +830,8 @@ const App = () => {
             </p>
           </div>
 
-          {/* Infinite Horizontal Running Marquee */}
-          <div className="glow-card rounded-3xl border border-white/10 p-6 sm:p-8 relative overflow-hidden bg-gradient-to-b from-slate-900/60 to-slate-950/90 shadow-2xl">
-            <div className="flex items-center justify-between pb-4 mb-2 border-b border-white/5">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold text-sky-400 uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                <span>Active Skills & Technologies</span>
-              </span>
-              <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
-                Hover to pause • 20+ tools
-              </span>
-            </div>
-
+          {/* Framed Tech Stack Box Container */}
+          <div className="glow-card rounded-3xl border border-white/10 p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-gradient-to-b from-[#0e1324]/90 via-[#0a0e1a]/95 to-[#060812]/98 shadow-2xl backdrop-blur-xl">
             <TechStackMarquee categories={techStackCategories} />
           </div>
         </section>

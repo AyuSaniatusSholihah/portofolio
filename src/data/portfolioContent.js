@@ -7,7 +7,7 @@ export const portfolioContent = {
   aboutPhoto: profilePhoto, // Ganti jika ingin foto About berbeda
   name: 'Ayu Saniatus Sholihah',
   nickname: 'Nia',
-  roleTitle: 'Informatics Student · Builder · Learner · Creative Technologist',
+  roleTitle: 'ML Enthusiast · Web Developer · Creative Technologist',
   university: 'Universitas Sebelas Maret',
   major: 'Informatics',
   academicYear: '2024 - Now',
@@ -18,6 +18,34 @@ export const portfolioContent = {
   aboutLong:
     "I'm an Informatics student at Sebelas Maret University who loves solving problems, organising ideas, and bringing them to life through technology. I learn best by doing, collaborating, and building meaningful things that can create positive impact for society.",
   resumeLink: 'https://drive.google.com/file/d/1V6pJ5puwtmDGhg2WBI45IYzaty-1NRor/view?usp=sharing',
+  
+  educationHistory: [
+    {
+      institution: 'Universitas Sebelas Maret (UNS)',
+      degree: 'S1 Informatika (Informatics Engineering)',
+      period: '2024 – Sekarang',
+      status: 'Active Undergraduate Student',
+      location: 'Surakarta, Indonesia',
+      program: 'Program Sarjana (S1)',
+      highlights: ['Web Development', 'Machine Learning', 'Academic Research & SIM UNS'],
+      accentColor: 'sky',
+    },
+    {
+      institution: 'MAN 2 Kudus',
+      degree: 'BCS Sains (Boarding School)',
+      period: '2021 – 2024',
+      status: 'Alumni / Lulusan',
+      location: 'Kudus, Jawa Tengah',
+      program: 'Bilingual Class Science (BCS Boarding School)',
+      highlights: [
+        'Ekskul KIR (Kelompok Ilmiah Remaja)',
+        'Perlombaan KTI (Karya Tulis Ilmiah)',
+        'Organisasi Pramuka',
+        'Perlombaan Bulutangkis',
+      ],
+      accentColor: 'pink',
+    },
+  ],
   
   contactLinks: {
     email: 'mailto:ayu.saniatus@gmail.com',
@@ -509,15 +537,17 @@ export const portfolioContent = {
     {
       title: 'Languages',
       items: [
+        { name: 'PHP', slug: 'php', label: 'PHP' },
         { name: 'Python', slug: 'python', label: 'Python' },
-        { name: 'C/C++', slug: 'c,cpp', label: 'C / C++' },
         { name: 'JavaScript', slug: 'js', label: 'JS' },
         { name: 'Java', slug: 'java', label: 'Java' },
+        { name: 'C/C++', slug: 'c,cpp', label: 'C / C++' },
       ],
     },
     {
       title: 'Web Development',
       items: [
+        { name: 'Laravel', slug: 'laravel', label: 'Laravel' },
         { name: 'React', slug: 'react', label: 'React' },
         { name: 'Vite', slug: 'vite', label: 'Vite' },
         { name: 'Tailwind CSS', slug: 'tailwind', label: 'Tailwind' },
@@ -529,22 +559,24 @@ export const portfolioContent = {
       title: 'Database',
       items: [
         { name: 'MySQL', slug: 'mysql', label: 'MySQL' },
-        { name: 'PostgreSQL', slug: 'postgres', label: 'Postgres' },
-        { name: 'Supabase', slug: 'supabase', label: 'Supabase' },
       ],
     },
     {
       title: 'Design',
       items: [
         { name: 'Figma', slug: 'figma', label: 'Figma' },
-        { name: 'Canva', slug: 'canva', label: 'Canva' },
+        { name: 'Canva', slug: 'canva', iconUrl: 'https://cdn.simpleicons.org/canva/00C4CC', label: 'Canva' },
       ],
     },
     {
       title: 'Productivity',
       items: [
-        { name: 'Google Suite', slug: 'gmail', label: 'Google Docs/Sheets' },
-        { name: 'Notion', slug: 'notion', label: 'Notion' },
+        {
+          name: 'Google Docs & Sheets',
+          slug: 'googledocs',
+          iconUrl: 'https://cdn.simpleicons.org/googledocs/4285F4',
+          label: 'Google Docs & Sheets',
+        },
         { name: 'Git & GitHub', slug: 'git,github', label: 'Git / GitHub' },
       ],
     },

@@ -3,6 +3,7 @@ import React from 'react';
 export interface TechItem {
   name: string;
   slug?: string | null;
+  iconUrl?: string | null;
   label: string;
   category?: string;
 }
@@ -34,21 +35,53 @@ export const TechStackMarquee: React.FC<TechStackMarqueeProps> = ({ categories =
   const duplicatedRow1 = [...row1, ...row1, ...row1];
   const duplicatedRow2 = [...row2, ...row2, ...row2];
 
+  const getIconUrl = (item: TechItem) => {
+    if (item.iconUrl) return item.iconUrl;
+    if (!item.slug) return null;
+    if (item.slug === 'canva') {
+      return 'https://cdn.simpleicons.org/canva/00C4CC';
+    }
+    if (
+      item.slug === 'googledocs' ||
+      item.slug === 'docs' ||
+      item.slug === 'gmail' ||
+      item.slug === 'gsuite'
+    ) {
+      return 'https://cdn.simpleicons.org/googledocs/4285F4';
+    }
+    if (
+      item.slug === 'googlesheets' ||
+      item.slug === 'sheets' ||
+      item.slug === 'excel'
+    ) {
+      return 'https://cdn.simpleicons.org/googlesheets/34A853';
+    }
+    return `https://skillicons.dev/icons?i=${item.slug}&theme=dark`;
+  };
+
   const renderCard = (item: TechItem, index: number) => {
+    const iconSrc = getIconUrl(item);
+
     return (
       <div
         key={`${item.name}-${index}`}
         className="flex items-center gap-3.5 px-5 py-3 rounded-2xl bg-slate-900/80 border border-white/10 shadow-lg hover:border-pink-500/50 hover:bg-slate-800/90 transition-all duration-300 hover:scale-105 hover:shadow-pink-500/20 flex-shrink-0 group cursor-default"
       >
         <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform">
-          {item.slug ? (
+          {iconSrc ? (
             <img
-              src={`https://go-skill-icons.vercel.app/api/icons?i=${item.slug}&theme=dark`}
+              src={iconSrc}
               alt={item.name}
               className="w-full h-full object-contain"
               loading="lazy"
               onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
+                const target = e.target as HTMLImageElement;
+                if (!target.dataset.triedFallback && item.slug) {
+                  target.dataset.triedFallback = 'true';
+                  target.src = `https://go-skill-icons.vercel.app/api/icons?i=${item.slug}&theme=dark`;
+                } else {
+                  target.style.display = 'none';
+                }
               }}
             />
           ) : (

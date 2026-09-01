@@ -13,6 +13,9 @@ export function getStoredPortfolioData() {
       return {
         ...defaultContent,
         ...parsed,
+        // Always ensure latest tech stack definitions from defaultContent take effect
+        techStackCategories: defaultContent.techStackCategories,
+        educationHistory: defaultContent.educationHistory,
         // Preserve assets / objects that shouldn't be overridden if missing
         profilePhoto: parsed.profilePhoto || defaultContent.profilePhoto,
         aboutPhoto: parsed.aboutPhoto || defaultContent.aboutPhoto,
@@ -25,15 +28,44 @@ export function getStoredPortfolioData() {
   return defaultContent;
 }
 
-// Helper to save data to localStorage and dispatch event
-export function savePortfolioData(newData) {
+// Helper to save data to localStorage and sync to Cloud Database asynchronously
+export async function savePortfolioData(newData) {
+  let localSaved = false;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
     window.dispatchEvent(new CustomEvent(EVENT_KEY, { detail: newData }));
-    return true;
+    localSaved = true;
   } catch (e) {
     console.error('Failed to save to localStorage:', e);
-    return false;
+  }
+
+  // Attempt sync to Cloud Database (/api/portfolio)
+  try {
+    const res = await fetch('/api/portfolio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newData),
+    });
+    const json = await res.json();
+    if (json.success) {
+      return {
+        success: true,
+        cloudSaved: true,
+        message: 'Perubahan berhasil disimpan ke Cloud Database & Browser! 🎉',
+      };
+    } else {
+      return {
+        success: localSaved,
+        cloudSaved: false,
+        message: json.message || 'Tersimpan di browser lokal.',
+      };
+    }
+  } catch (err) {
+    return {
+      success: localSaved,
+      cloudSaved: false,
+      message: 'Tersimpan di browser lokal.',
+    };
   }
 }
 
@@ -126,6 +158,7 @@ export const usePortfolioData = () => {
             ...prev,
             ...json.data,
             profilePhoto: json.data.profilePhoto || prev.profilePhoto,
+            aboutPhoto: json.data.aboutPhoto || prev.aboutPhoto,
             techIconMap: prev.techIconMap,
           }));
           setSource('database');

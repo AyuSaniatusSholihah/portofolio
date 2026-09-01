@@ -28,6 +28,8 @@ import {
   CheckCircle2,
   Sliders,
   FileCode2,
+  Database,
+  Image as ImageIcon,
 } from 'lucide-react';
 import {
   usePortfolioData,
@@ -35,6 +37,8 @@ import {
   exportPortfolioDataJSON,
   generatePortfolioContentJS,
 } from '../../hooks/usePortfolioData.js';
+import { ImageUploadInput } from './ImageUploadInput.jsx';
+import { MediaLibraryTab } from './MediaLibraryTab.jsx';
 
 export default function AdminDashboard({ onBackToPortfolio }) {
   const { content, resetContent } = usePortfolioData();
@@ -51,8 +55,31 @@ export default function AdminDashboard({ onBackToPortfolio }) {
   // Navigation Tab State
   const [activeTab, setActiveTab] = useState('overview');
 
+  // Cloud Database connection state
+  const [dbStatus, setDbStatus] = useState('checking'); // 'connected' | 'unconfigured' | 'checking'
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSeeding, setIsSeeding] = useState(false);
+
   // UI Toast State
   const [toast, setToast] = useState(null);
+
+  // Check DB status on mount
+  useEffect(() => {
+    async function checkDb() {
+      try {
+        const res = await fetch('/api/portfolio');
+        const json = await res.json();
+        if (json.source === 'database') {
+          setDbStatus('connected');
+        } else {
+          setDbStatus('unconfigured');
+        }
+      } catch (e) {
+        setDbStatus('unconfigured');
+      }
+    }
+    checkDb();
+  }, []);
 
   // Search & Filter state for lists
   const [projectSearch, setProjectSearch] = useState('');
@@ -74,7 +101,7 @@ export default function AdminDashboard({ onBackToPortfolio }) {
     setToast({ message, type });
     setTimeout(() => {
       setToast(null);
-    }, 3500);
+    }, 4500);
   };
 
   const handleLogin = (e) => {
@@ -85,7 +112,7 @@ export default function AdminDashboard({ onBackToPortfolio }) {
       setPinError('');
       showToast('Selamat datang di Admin Studio Nia! ✨');
     } else {
-      setPinError('PIN salah. Default PIN adalah "nia123"');
+      setPinError('PIN salah');
     }
   };
 
@@ -95,12 +122,42 @@ export default function AdminDashboard({ onBackToPortfolio }) {
     setPinInput('');
   };
 
-  const handleSaveAll = () => {
-    const success = savePortfolioData(formData);
-    if (success) {
-      showToast('Semua perubahan berhasil disimpan dan aktif secara LIVE! 🎉');
-    } else {
-      showToast('Gagal menyimpan data ke LocalStorage.', 'error');
+  const handleSaveAll = async () => {
+    setIsSaving(true);
+    try {
+      const result = await savePortfolioData(formData);
+      if (result.cloudSaved) {
+        setDbStatus('connected');
+        showToast('Semua data berhasil disimpan ke Cloud Database & Browser! Perubahan kini aktif di semua link Vercel! 🌐✨');
+      } else if (result.success) {
+        showToast('Data tersimpan di browser lokal. (Untuk menyimpan ke semua pengunjung link Vercel, hubungkan DATABASE_URL di Vercel).', 'info');
+      } else {
+        showToast('Gagal menyimpan data.', 'error');
+      }
+    } catch (err) {
+      showToast('Terjadi kesalahan saat menyimpan data.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleTriggerSeed = async () => {
+    setIsSeeding(true);
+    try {
+      const res = await fetch('/api/seed');
+      const json = await res.json();
+      if (json.success) {
+        setDbStatus('connected');
+        showToast('Database berhasil diinisialisasi & di-seed dengan sukses! 🎉');
+        // Refresh data
+        window.location.reload();
+      } else {
+        showToast(json.message || 'Gagal inisialisasi DB. Pastikan DATABASE_URL sudah diset.', 'error');
+      }
+    } catch (err) {
+      showToast('Gagal menghubungi /api/seed: ' + err.message, 'error');
+    } finally {
+      setIsSeeding(false);
     }
   };
 
@@ -189,7 +246,7 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                 type="password"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                placeholder="Masukkan PIN (default: nia123)"
+                placeholder="Masukkan PIN"
                 className="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-center tracking-widest text-lg font-mono transition-all"
                 autoFocus
               />
@@ -276,11 +333,12 @@ export default function AdminDashboard({ onBackToPortfolio }) {
         <div className="flex items-center flex-wrap gap-2">
           <button
             onClick={handleSaveAll}
-            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white text-xs font-bold shadow-md shadow-pink-500/25 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
-            title="Simpan perubahan ke LocalStorage (Live)"
+            disabled={isSaving}
+            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white text-xs font-bold shadow-md shadow-pink-500/25 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50"
+            title="Simpan perubahan ke Cloud Database & LocalStorage (Live)"
           >
             <Save className="w-3.5 h-3.5" />
-            <span>Simpan Perubahan</span>
+            <span>{isSaving ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
           </button>
 
           <button
@@ -348,6 +406,7 @@ export default function AdminDashboard({ onBackToPortfolio }) {
           { id: 'projects', label: 'Projek', icon: FolderGit2 },
           { id: 'experiences', label: 'Pengalaman', icon: Briefcase },
           { id: 'achievements', label: 'Prestasi & Sertif', icon: Trophy },
+          { id: 'media', label: 'Media & Upload DB', icon: Database },
           { id: 'stories', label: 'Cerita Nia', icon: BookOpen },
           { id: 'skills', label: 'Keahlian (Skills)', icon: Cpu },
         ].map((tab) => {
@@ -380,16 +439,45 @@ export default function AdminDashboard({ onBackToPortfolio }) {
             {/* Banner info */}
             <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-900/90 via-indigo-950/30 to-pink-950/20 border border-white/10 relative overflow-hidden shadow-xl">
               <div className="max-w-2xl space-y-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-300 text-xs font-bold">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Nia Portfolio Control Panel</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-300 text-xs font-bold">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Nia Portfolio Control Panel</span>
+                  </div>
+
+                  {/* Database Cloud Status Badge */}
+                  {dbStatus === 'connected' ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                      <span>Cloud Database Terhubung (Vercel/Neon)</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">
+                      <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                      <span>Mode Lokal Browser (Database belum tersambung)</span>
+                    </span>
+                  )}
                 </div>
+
                 <h2 className="text-2xl font-bold text-white font-heading">
                   Halo, {formData.name || 'Nia'}! 👋
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                   Selamat datang di panel admin portofolio. Kamu bisa menambah, mengubah, atau menghapus projek, pengalaman, prestasi, serta cerita Nia kapan pun dengan mudah.
                 </p>
+
+                {dbStatus === 'unconfigured' && (
+                  <div className="pt-2">
+                    <button
+                      onClick={handleTriggerSeed}
+                      disabled={isSeeding}
+                      className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-200 text-xs font-bold flex items-center gap-2 cursor-pointer transition-all"
+                    >
+                      <Database className="w-3.5 h-3.5" />
+                      <span>{isSeeding ? 'Menginisialisasi...' : 'Hubungkan & Inisialisasi Database Cloud'}</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -783,6 +871,24 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                         })
                       }
                       className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-white text-xs focus:border-pink-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="pt-2 border-t border-white/5 space-y-4">
+                    <ImageUploadInput
+                      label="Foto Profil Utama (Hero Section)"
+                      category="profile"
+                      value={formData.profilePhoto || ''}
+                      onChange={(url) => setFormData({ ...formData, profilePhoto: url })}
+                      helperText="Foto ini tampil di hero spotlight lingkaran utama."
+                    />
+
+                    <ImageUploadInput
+                      label="Foto Tambahan (About Section)"
+                      category="profile"
+                      value={formData.aboutPhoto || ''}
+                      onChange={(url) => setFormData({ ...formData, aboutPhoto: url })}
+                      helperText="Foto ini tampil di kartu biografi About me."
                     />
                   </div>
                 </div>
@@ -1378,6 +1484,22 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                         placeholder="Contoh: Digunakan oleh 500+ mahasiswa aktif"
                       />
                     </div>
+
+                    <div className="sm:col-span-2 pt-2 border-t border-white/10">
+                      <ImageUploadInput
+                        label="Cover Gambar Projek (Upload / URL)"
+                        category="project"
+                        value={editingProject.image || ''}
+                        onChange={(url) =>
+                          setEditingProject({
+                            ...editingProject,
+                            image: url,
+                          })
+                        }
+                        placeholder="https://images.unsplash.com/... atau pilih file"
+                        helperText="Gambar cover ini akan langsung tampil pada kartu carousel slider projek."
+                      />
+                    </div>
                   </div>
 
                   <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-2">
@@ -1691,6 +1813,27 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                         }
                         className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:outline-none focus:border-indigo-500"
                         placeholder="React, Figma, Google Workspace..."
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2 pt-2 border-t border-white/10">
+                      <ImageUploadInput
+                        label="Foto Dokumentasi / Kegiatan (Upload / Drag & Drop)"
+                        category="experience"
+                        value={
+                          editingExp.gallery && editingExp.gallery.length > 0
+                            ? editingExp.gallery[0]
+                            : editingExp.image || ''
+                        }
+                        onChange={(url) =>
+                          setEditingExp({
+                            ...editingExp,
+                            image: url,
+                            gallery: url ? [url] : [],
+                          })
+                        }
+                        placeholder="https://... atau pilih foto kegiatan dari perangkat"
+                        helperText="Foto kegiatan ini akan tampil di galeri modal linimasa pengalaman."
                       />
                     </div>
                   </div>
@@ -2008,6 +2151,22 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                         className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white"
                       />
                     </div>
+
+                    <div className="pt-2 border-t border-white/10">
+                      <ImageUploadInput
+                        label="Foto Piala / Sertifikat Prestasi (Upload / URL)"
+                        category="achievement"
+                        value={editingAch.image || ''}
+                        onChange={(url) =>
+                          setEditingAch({
+                            ...editingAch,
+                            image: url,
+                          })
+                        }
+                        placeholder="https://... atau pilih foto dari perangkat"
+                        helperText="Foto ini tampil saat pengunjung mengklik 'Inspect Holographic Certificate'."
+                      />
+                    </div>
                   </div>
 
                   <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
@@ -2137,6 +2296,22 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                           })
                         }
                         className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white"
+                      />
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10">
+                      <ImageUploadInput
+                        label="Foto / Dokumen Sertifikat (Upload / URL)"
+                        category="certificate"
+                        value={editingCert.image || ''}
+                        onChange={(url) =>
+                          setEditingCert({
+                            ...editingCert,
+                            image: url,
+                          })
+                        }
+                        placeholder="https://... atau upload file sertifikat"
+                        helperText="Gambar sertifikat beresolusi tinggi akan tampil di modal inspeksi sertifikasi."
                       />
                     </div>
                   </div>
@@ -2434,6 +2609,22 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                         placeholder="Refleksi, Organisasi, WebDev..."
                       />
                     </div>
+
+                    <div className="pt-2 border-t border-white/10">
+                      <ImageUploadInput
+                        label="Foto Cover Cerita (Upload / Drag & Drop)"
+                        category="story"
+                        value={editingStory.image || ''}
+                        onChange={(url) =>
+                          setEditingStory({
+                            ...editingStory,
+                            image: url,
+                          })
+                        }
+                        placeholder="https://... atau pilih cover cerita dari perangkat"
+                        helperText="Foto cover ini akan tampil pada kartu blog Cerita Nia."
+                      />
+                    </div>
                   </div>
 
                   <div className="pt-4 border-t border-white/10 flex justify-end gap-2">
@@ -2552,6 +2743,10 @@ export default function AdminDashboard({ onBackToPortfolio }) {
             </div>
           </div>
         )}
+        {/* ======================================================== */}
+        {/* TAB 8: MEDIA & UPLOAD DB */}
+        {/* ======================================================== */}
+        {activeTab === 'media' && <MediaLibraryTab />}
       </main>
     </div>
   );

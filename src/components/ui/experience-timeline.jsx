@@ -17,6 +17,7 @@ import {
 export const ExperienceTimeline = ({ experiences = [] }) => {
   const [selectedExp, setSelectedExp] = useState(null);
   const [activeGalleryImg, setActiveGalleryImg] = useState(0);
+  const [selectedYear, setSelectedYear] = useState('ALL');
 
   // Group experiences by Year
   const groupedByYear = experiences.reduce((acc, exp) => {
@@ -183,72 +184,121 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
       </motion.div>
     );
   };
+ 
+  const filteredYears = selectedYear === 'ALL' ? years : years.filter((y) => y === selectedYear);
 
   return (
-    <div className="relative w-full space-y-10 py-2 max-w-5xl mx-auto">
-      {years.map((year) => {
-        const items = groupedByYear[year];
-        const leftItems = items.filter((_, i) => i % 2 === 0);
-        const rightItems = items.filter((_, i) => i % 2 === 1);
+    <>
+      <div className="glow-card rounded-3xl border border-white/10 p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-gradient-to-b from-[#0e1324]/90 via-[#0a0e1a]/95 to-[#060812]/98 shadow-2xl backdrop-blur-xl">
+      {/* Top Header Controls Bar Inside Box */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/10 text-pink-300 border border-pink-500/20">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{experiences.length} Perjalanan & Organisasi</span>
+          </span>
+          <span className="text-[11px] text-slate-500 font-medium hidden md:inline">
+            • Scroll di dalam kotak ini ↓
+          </span>
+        </div>
 
-        return (
-          <div key={year} className="space-y-6">
-            {/* Centered Compact Year Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -15, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.45, ease: 'easeOut' }}
-              className="flex justify-center items-center relative z-20"
+        {/* Year Filter Tabs */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full sm:w-auto">
+          <button
+            onClick={() => setSelectedYear('ALL')}
+            className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              selectedYear === 'ALL'
+                ? 'bg-gradient-to-r from-pink-500 to-indigo-600 text-white shadow-md'
+                : 'text-slate-400 hover:text-slate-200 bg-white/5'
+            }`}
+          >
+            Semua Tahun
+          </button>
+          {years.map((y) => (
+            <button
+              key={y}
+              onClick={() => setSelectedYear(y)}
+              className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                selectedYear === y
+                  ? 'bg-pink-500 text-white shadow-md'
+                  : 'text-slate-400 hover:text-slate-200 bg-white/5'
+              }`}
             >
-              <div className="px-4 py-1 rounded-full bg-gradient-to-r from-sky-500/20 via-pink-500/25 to-indigo-500/20 border border-pink-500/40 text-white font-bold text-xs tracking-widest uppercase shadow-[0_0_15px_rgba(236,72,153,0.3)] backdrop-blur-xl flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-ping"></span>
-                <span className="font-heading font-black tracking-wider text-xs sm:text-sm">{year}</span>
-                <span className="text-pink-400 text-[9px] sm:text-[10px]">• TIMELINE</span>
-              </div>
-            </motion.div>
+              {y}
+            </button>
+          ))}
+        </div>
+      </div>
 
-            {/* Zig-Zag Timeline Container */}
-            <div className="relative w-full">
-              {/* Central Glowing Vertical Neon Line (Desktop) / Left Line (Mobile) */}
-              <div className="absolute top-0 bottom-0 left-2.5 md:left-1/2 md:-translate-x-1/2 w-0.5 bg-gradient-to-b from-sky-500 via-pink-500 to-indigo-500 opacity-40 z-0"></div>
+      {/* Scrollable Timeline Box Area */}
+      <div className="relative w-full max-h-[580px] overflow-y-auto pr-1 sm:pr-3 py-2 scrollbar-thin scrollbar-thumb-pink-500/30 hover:scrollbar-thumb-pink-500/60 scrollbar-track-slate-950/40">
+        <div className="relative w-full space-y-10 py-2 max-w-4xl mx-auto">
+          {filteredYears.map((year) => {
+            const items = groupedByYear[year];
+            const leftItems = items.filter((_, i) => i % 2 === 0);
+            const rightItems = items.filter((_, i) => i % 2 === 1);
 
-              {/* Desktop: Staggered Dual Columns (Interleaved Half-height offset) */}
-              <div className="hidden md:grid md:grid-cols-2 gap-x-12 items-start relative z-10">
-                {/* Left Column (Items 0, 2, 4...) */}
-                <div className="space-y-5">
-                  {leftItems.map((exp, idx) => renderCard(exp, 'left', idx * 0.1))}
-                </div>
+            return (
+              <div key={year} className="space-y-6">
+                {/* Centered Compact Year Pill Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: -15, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.45, ease: 'easeOut' }}
+                  className="flex justify-center items-center relative z-20"
+                >
+                  <div className="px-4 py-1 rounded-full bg-gradient-to-r from-sky-500/20 via-pink-500/25 to-indigo-500/20 border border-pink-500/40 text-white font-bold text-xs tracking-widest uppercase shadow-[0_0_15px_rgba(236,72,153,0.3)] backdrop-blur-xl flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-ping"></span>
+                    <span className="font-heading font-black tracking-wider text-xs sm:text-sm">{year}</span>
+                    <span className="text-pink-400 text-[9px] sm:text-[10px]">• TIMELINE</span>
+                  </div>
+                </motion.div>
 
-                {/* Right Column (Items 1, 3, 5...) - Offset down by ~50% card height for zig-zag */}
-                <div className="space-y-5 pt-12 lg:pt-14">
-                  {rightItems.map((exp, idx) => renderCard(exp, 'right', idx * 0.1 + 0.15))}
-                </div>
-              </div>
+                {/* Zig-Zag Timeline Container */}
+                <div className="relative w-full">
+                  {/* Central Glowing Vertical Neon Line (Desktop) / Left Line (Mobile) */}
+                  <div className="absolute top-0 bottom-0 left-2.5 md:left-1/2 md:-translate-x-1/2 w-0.5 bg-gradient-to-b from-sky-500 via-pink-500 to-indigo-500 opacity-40 z-0"></div>
 
-              {/* Mobile: Compact Zig-Zag Alternating Stack */}
-              <div className="md:hidden space-y-4 pl-6 relative z-10">
-                {items.map((exp, idx) => {
-                  const isEven = idx % 2 === 0;
-                  return (
-                    <div key={exp.id || idx} className="relative">
-                      {/* Glowing Node Dot on Timeline */}
-                      <div
-                        className={`absolute -left-[19px] top-4 w-2.5 h-2.5 rounded-full border-2 border-slate-950 z-20 ${
-                          isEven
-                            ? 'bg-pink-400 shadow-[0_0_8px_rgba(236,72,153,0.8)]'
-                            : 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]'
-                        }`}
-                      />
-                      {renderCard(exp, isEven ? 'left' : 'right', idx * 0.06)}
+                  {/* Desktop: Staggered Dual Columns (Interleaved Half-height offset) */}
+                  <div className="hidden md:grid md:grid-cols-2 gap-x-10 items-start relative z-10">
+                    {/* Left Column (Items 0, 2, 4...) */}
+                    <div className="space-y-5">
+                      {leftItems.map((exp, idx) => renderCard(exp, 'left', idx * 0.1))}
                     </div>
-                  );
-                })}
+
+                    {/* Right Column (Items 1, 3, 5...) */}
+                    <div className="space-y-5 pt-10 lg:pt-12">
+                      {rightItems.map((exp, idx) => renderCard(exp, 'right', idx * 0.1 + 0.15))}
+                    </div>
+                  </div>
+
+                  {/* Mobile: Compact Zig-Zag Alternating Stack */}
+                  <div className="md:hidden space-y-4 pl-6 relative z-10">
+                    {items.map((exp, idx) => {
+                      const isEven = idx % 2 === 0;
+                      return (
+                        <div key={exp.id || idx} className="relative">
+                          {/* Glowing Node Dot on Timeline */}
+                          <div
+                            className={`absolute -left-[19px] top-4 w-2.5 h-2.5 rounded-full border-2 border-slate-950 z-20 ${
+                              isEven
+                                ? 'bg-pink-400 shadow-[0_0_8px_rgba(236,72,153,0.8)]'
+                                : 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+                            }`}
+                          />
+                          {renderCard(exp, isEven ? 'left' : 'right', idx * 0.06)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        );
-      })}
+            );
+          })}
+        </div>
+      </div>
+    </div>
 
       {/* ================= Interactive Documentation Modal ================= */}
       <AnimatePresence>
@@ -457,7 +507,7 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
           </div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 
