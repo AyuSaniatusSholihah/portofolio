@@ -189,7 +189,7 @@ export default function AdminDashboard({ onBackToPortfolio }) {
                 type="password"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                placeholder="Masukkan PIN (default: nia123)"
+                placeholder="Masukkan PIN"
                 className="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-center tracking-widest text-lg font-mono transition-all"
                 autoFocus
               />
