@@ -55,11 +55,19 @@ export const ImageUploadInput = ({
           canvas.width = width;
           canvas.height = height;
           const ctx = canvas.getContext('2d');
+          
+          // Clear canvas with transparency (no solid background)
+          ctx.clearRect(0, 0, width, height);
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Output compressed JPEG data URL
-          const dataUrl = canvas.toDataURL('image/jpeg', quality);
-          resolve(dataUrl);
+          // Preserve transparency for PNG
+          if (file.type === 'image/png') {
+            const dataUrl = canvas.toDataURL('image/png');
+            resolve(dataUrl);
+          } else {
+            const dataUrl = canvas.toDataURL('image/webp', quality);
+            resolve(dataUrl);
+          }
         };
         img.onerror = (err) => reject(err);
       };
