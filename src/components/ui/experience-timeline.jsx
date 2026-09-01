@@ -60,38 +60,40 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
     return (
       <motion.div
         key={exp.id || exp.role}
-        initial={{ opacity: 0, y: 35, scale: 0.95 }}
+        initial={{ opacity: 0, y: 25, scale: 0.96 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
-        whileHover={{ scale: 1.02, y: -2 }}
+        transition={{ duration: 0.45, delay, ease: [0.16, 1, 0.3, 1] }}
+        whileHover={{ scale: 1.015, y: -2 }}
         className="relative group w-full"
       >
         {/* Horizontal Connector Pin to Center Line (Desktop) */}
         <div
-          className={`hidden md:block absolute top-6 w-5 h-0.5 bg-gradient-to-r from-sky-400 to-pink-400 opacity-40 group-hover:opacity-100 transition-opacity ${
-            isLeft ? '-right-5' : '-left-5'
+          className={`hidden md:block absolute top-5 w-6 h-0.5 bg-gradient-to-r from-sky-400 to-pink-400 opacity-50 group-hover:opacity-100 transition-opacity ${
+            isLeft ? '-right-6' : '-left-6'
           }`}
         ></div>
 
         {/* Compact Card Content */}
         <div
-          className={`glow-card rounded-2xl border border-white/10 p-4 sm:p-5 transition-all duration-300 hover:shadow-xl relative overflow-hidden ${
-            isLeft ? 'hover:border-pink-500/50' : 'hover:border-sky-500/50'
+          className={`glow-card rounded-xl sm:rounded-2xl border border-white/10 p-3.5 sm:p-4 transition-all duration-300 hover:shadow-xl relative overflow-hidden ${
+            isLeft
+              ? 'hover:border-pink-500/50 hover:shadow-[0_10px_30px_rgba(236,72,153,0.15)]'
+              : 'hover:border-sky-500/50 hover:shadow-[0_10px_30px_rgba(56,189,248,0.15)]'
           }`}
         >
-          <div className="space-y-2.5">
-            {/* Badges */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300">
+          <div className="space-y-2">
+            {/* Badges Row */}
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/5 border border-white/10 text-slate-300">
                 <Calendar className="w-2.5 h-2.5 text-sky-400" />
                 <span>{exp.period}</span>
               </span>
               <span
-                className={`px-2 py-0.5 rounded-full text-[10px] font-medium border ${
+                className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${
                   isLeft
-                    ? 'bg-pink-500/10 text-pink-300 border-pink-500/20'
-                    : 'bg-sky-500/10 text-sky-300 border-sky-500/20'
+                    ? 'bg-pink-500/15 text-pink-300 border-pink-500/30'
+                    : 'bg-sky-500/15 text-sky-300 border-sky-500/30'
                 }`}
               >
                 {exp.type}
@@ -101,17 +103,17 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
             {/* Title & Organization */}
             <div>
               <h3
-                className={`text-base sm:text-lg font-bold text-white transition-colors font-heading leading-tight ${
+                className={`text-sm sm:text-base font-bold text-white transition-colors font-heading leading-snug ${
                   isLeft ? 'group-hover:text-pink-300' : 'group-hover:text-sky-300'
                 }`}
               >
                 {exp.role}
               </h3>
-              <p className="text-xs font-semibold text-sky-400 flex items-center gap-1 mt-0.5">
-                <Building2 className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
-                <span>{exp.organization}</span>
+              <p className="text-[11px] sm:text-xs font-semibold text-sky-400 flex items-center gap-1 mt-0.5">
+                <Building2 className="w-3 h-3 text-sky-400 flex-shrink-0" />
+                <span className="truncate">{exp.organization}</span>
                 {exp.orgSubtitle && (
-                  <span className="text-[11px] text-slate-500 font-normal">
+                  <span className="text-[10px] text-slate-500 font-normal truncate">
                     • {exp.orgSubtitle}
                   </span>
                 )}
@@ -119,33 +121,35 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
             </div>
 
             {/* Description snippet */}
-            <p className="text-xs text-slate-300 leading-relaxed line-clamp-2">
+            <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed line-clamp-2">
               {exp.description}
             </p>
 
             {/* Highlights Tags */}
-            <div className="flex flex-wrap gap-1 pt-0.5">
-              {exp.highlights?.map((h, hIdx) => (
-                <span
-                  key={hIdx}
-                  className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-900/90 border border-slate-700/80 text-slate-300 inline-flex items-center gap-1"
-                >
-                  <Sparkles
-                    className={`w-2.5 h-2.5 flex-shrink-0 ${
-                      isLeft ? 'text-pink-400' : 'text-sky-400'
-                    }`}
-                  />
-                  <span>{h}</span>
-                </span>
-              ))}
-            </div>
+            {exp.highlights && exp.highlights.length > 0 && (
+              <div className="flex flex-wrap gap-1 pt-0.5">
+                {exp.highlights.slice(0, 3).map((h, hIdx) => (
+                  <span
+                    key={hIdx}
+                    className="px-1.5 py-0.5 rounded-md text-[9px] font-medium bg-slate-900/90 border border-slate-700/80 text-slate-300 inline-flex items-center gap-1"
+                  >
+                    <Sparkles
+                      className={`w-2 h-2 flex-shrink-0 ${
+                        isLeft ? 'text-pink-400' : 'text-sky-400'
+                      }`}
+                    />
+                    <span>{h}</span>
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* Bottom Action Footer */}
-            <div className="pt-2.5 border-t border-white/5 flex items-center justify-between gap-2">
+            <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
               {defaultGallery.length > 0 && (
                 <div
                   onClick={() => openModal(exp)}
-                  className="relative w-14 h-9 rounded-lg overflow-hidden border border-white/15 cursor-pointer hover:scale-105 transition-transform flex-shrink-0 shadow-sm"
+                  className="relative w-12 h-7 sm:w-14 sm:h-8 rounded-lg overflow-hidden border border-white/15 cursor-pointer hover:scale-105 transition-transform flex-shrink-0 shadow-sm"
                 >
                   <img
                     src={defaultGallery[0]}
@@ -153,7 +157,7 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-slate-950/40 flex items-center justify-center">
-                    <span className="px-1 py-0.2 rounded bg-slate-950/80 text-[9px] font-bold text-white flex items-center gap-0.5">
+                    <span className="px-1 rounded bg-slate-950/80 text-[8px] sm:text-[9px] font-bold text-white flex items-center gap-0.5">
                       <Images className="w-2 h-2 text-pink-400" />
                       {defaultGallery.length}
                     </span>
@@ -163,14 +167,14 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
 
               <button
                 onClick={() => openModal(exp)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold text-white shadow-sm transition-all inline-flex items-center gap-1 hover:scale-105 active:scale-95 cursor-pointer ml-auto ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold text-white shadow-sm transition-all inline-flex items-center gap-1 hover:scale-105 active:scale-95 cursor-pointer ml-auto ${
                   isLeft
                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-pink-600 hover:to-rose-600 hover:shadow-pink-500/25'
                     : 'bg-gradient-to-r from-pink-600 to-rose-600 hover:from-blue-600 hover:to-indigo-600 hover:shadow-sky-500/25'
                 }`}
               >
                 <Eye className="w-3 h-3" />
-                <span>Lihat Projek</span>
+                <span>Lihat</span>
                 <ChevronRight className="w-3 h-3" />
               </button>
             </div>
@@ -181,7 +185,7 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
   };
 
   return (
-    <div className="relative w-full space-y-12 py-4 max-w-5xl mx-auto">
+    <div className="relative w-full space-y-10 py-2 max-w-5xl mx-auto">
       {years.map((year) => {
         const items = groupedByYear[year];
         const leftItems = items.filter((_, i) => i % 2 === 0);
@@ -197,34 +201,49 @@ export const ExperienceTimeline = ({ experiences = [] }) => {
               transition={{ duration: 0.45, ease: 'easeOut' }}
               className="flex justify-center items-center relative z-20"
             >
-              <div className="px-5 py-1.5 rounded-full bg-gradient-to-r from-sky-500/20 via-pink-500/25 to-indigo-500/20 border border-pink-500/40 text-white font-bold text-xs tracking-widest uppercase shadow-[0_0_15px_rgba(236,72,153,0.3)] backdrop-blur-xl flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
-                <span className="font-heading font-black tracking-wider text-sm">{year}</span>
-                <span className="text-pink-400 text-[10px]">• MILESTONES</span>
+              <div className="px-4 py-1 rounded-full bg-gradient-to-r from-sky-500/20 via-pink-500/25 to-indigo-500/20 border border-pink-500/40 text-white font-bold text-xs tracking-widest uppercase shadow-[0_0_15px_rgba(236,72,153,0.3)] backdrop-blur-xl flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-ping"></span>
+                <span className="font-heading font-black tracking-wider text-xs sm:text-sm">{year}</span>
+                <span className="text-pink-400 text-[9px] sm:text-[10px]">• TIMELINE</span>
               </div>
             </motion.div>
 
-            {/* Staggered Dual Column (Zig-Zag Setengah Tinggi Tanpa Gap Kosong) */}
+            {/* Zig-Zag Timeline Container */}
             <div className="relative w-full">
               {/* Central Glowing Vertical Neon Line (Desktop) / Left Line (Mobile) */}
-              <div className="absolute top-0 bottom-0 left-3 md:left-1/2 md:-translate-x-1/2 w-0.5 bg-gradient-to-b from-sky-500 via-pink-500 to-indigo-500 opacity-40 z-0"></div>
+              <div className="absolute top-0 bottom-0 left-2.5 md:left-1/2 md:-translate-x-1/2 w-0.5 bg-gradient-to-b from-sky-500 via-pink-500 to-indigo-500 opacity-40 z-0"></div>
 
               {/* Desktop: Staggered Dual Columns (Interleaved Half-height offset) */}
               <div className="hidden md:grid md:grid-cols-2 gap-x-12 items-start relative z-10">
                 {/* Left Column (Items 0, 2, 4...) */}
-                <div className="space-y-6">
+                <div className="space-y-5">
                   {leftItems.map((exp, idx) => renderCard(exp, 'left', idx * 0.1))}
                 </div>
 
-                {/* Right Column (Items 1, 3, 5...) - Offset down by ~50% card height so it weaves continuously! */}
-                <div className="space-y-6 pt-16 lg:pt-20">
+                {/* Right Column (Items 1, 3, 5...) - Offset down by ~50% card height for zig-zag */}
+                <div className="space-y-5 pt-12 lg:pt-14">
                   {rightItems.map((exp, idx) => renderCard(exp, 'right', idx * 0.1 + 0.15))}
                 </div>
               </div>
 
-              {/* Mobile: Clean Vertical Stack with line on left */}
-              <div className="md:hidden space-y-6 pl-8 relative z-10">
-                {items.map((exp, idx) => renderCard(exp, idx % 2 === 0 ? 'left' : 'right', idx * 0.08))}
+              {/* Mobile: Compact Zig-Zag Alternating Stack */}
+              <div className="md:hidden space-y-4 pl-6 relative z-10">
+                {items.map((exp, idx) => {
+                  const isEven = idx % 2 === 0;
+                  return (
+                    <div key={exp.id || idx} className="relative">
+                      {/* Glowing Node Dot on Timeline */}
+                      <div
+                        className={`absolute -left-[19px] top-4 w-2.5 h-2.5 rounded-full border-2 border-slate-950 z-20 ${
+                          isEven
+                            ? 'bg-pink-400 shadow-[0_0_8px_rgba(236,72,153,0.8)]'
+                            : 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+                        }`}
+                      />
+                      {renderCard(exp, isEven ? 'left' : 'right', idx * 0.06)}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

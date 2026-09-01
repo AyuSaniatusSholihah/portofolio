@@ -13,12 +13,10 @@ export const usePortfolio = () => {
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
-      const headerOffset = 120; // Height of fixed header + extra breathing room
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
+      // Use standard scrollIntoView which naturally respects CSS scroll-mt-28
+      element.scrollIntoView({
         behavior: 'smooth',
+        block: 'start',
       });
     }
   };

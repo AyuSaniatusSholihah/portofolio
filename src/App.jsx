@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Github,
   Linkedin,
@@ -31,16 +32,21 @@ import {
   Calendar,
   Check,
   User,
+  Menu,
+  X,
 } from 'lucide-react';
 
 import './App.css';
 import HeroScrollVideoReveal from './components/ui/hero-scroll-video-pin-reveal.jsx';
+import logoImg from './assets/projects/logo.jpg';
 import { CircularTestimonials } from './components/ui/circular-testimonials.jsx';
+import ProjectsSlider from './components/ui/projects-slider.jsx';
 import TechStackMarquee from './components/ui/tech-stack-marquee.jsx';
 import ExperienceTimeline from './components/ui/experience-timeline.jsx';
 import GamifiedAchievements from './components/ui/gamified-achievements.jsx';
 import CeritaNiaInteractive from './components/ui/cerita-nia-interactive.jsx';
 import AllStoriesPage from './components/ui/all-stories-page.jsx';
+import AdminDashboard from './components/admin/AdminDashboard.jsx';
 import { usePortfolio } from './hooks/usePortfolio.js';
 import { usePortfolioData } from './hooks/usePortfolioData.js';
 import { useScrollReveal } from './hooks/useScrollReveal.js';
@@ -50,16 +56,22 @@ const App = () => {
   const { content } = usePortfolioData();
   useScrollReveal();
 
-  // Page View Routing State ('home' | 'stories')
+  // Page View Routing State ('home' | 'stories' | 'admin')
   const [currentView, setCurrentView] = useState(() => {
-    return window.location.hash === '#/stories' ? 'stories' : 'home';
+    const hash = window.location.hash;
+    if (hash === '#/stories' || hash === '#stories') return 'stories';
+    if (hash === '#/admin' || hash === '#admin') return 'admin';
+    return 'home';
   });
 
   // Listen to hash changes for browser back/forward
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash === '#/stories') {
+      const hash = window.location.hash;
+      if (hash === '#/stories' || hash === '#stories') {
         setCurrentView('stories');
+      } else if (hash === '#/admin' || hash === '#admin') {
+        setCurrentView('admin');
       } else {
         setCurrentView('home');
       }
@@ -75,11 +87,13 @@ const App = () => {
   // Project Category Filter State
   const [selectedCategory, setSelectedCategory] = useState('Semua');
 
+  // Mobile Navigation Drawer State
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const {
     name,
     roleTitle,
     location,
-    gpa,
     bioShort,
     aboutLong,
     resumeLink,
@@ -154,6 +168,18 @@ const App = () => {
     }
   };
 
+  // Dedicated Admin Studio Dashboard View
+  if (currentView === 'admin') {
+    return (
+      <AdminDashboard
+        onBackToPortfolio={() => {
+          window.location.hash = '';
+          setCurrentView('home');
+        }}
+      />
+    );
+  }
+
   // Dedicated Full Archive Page View for Stories & Articles
   if (currentView === 'stories') {
     return (
@@ -170,34 +196,35 @@ const App = () => {
   return (
     <div className="min-h-screen bg-[#07080d] text-slate-100 relative selection:bg-pink-500 selection:text-white font-sans overflow-x-hidden">
       {/* Background ambient lighting */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-3xl"></div>
         <div className="absolute top-[30%] left-[-100px] w-[450px] h-[450px] bg-pink-500/8 rounded-full blur-3xl"></div>
         <div className="absolute bottom-[20%] right-[-100px] w-[500px] h-[500px] bg-indigo-500/8 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Navigation Header */}
-      <header className="fixed top-0 left-0 w-full glass-nav z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      {/* Navigation Header - Slim, Sleek, and Non-Intrusive */}
+      <header className="fixed top-0 left-0 w-full glass-nav z-40 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <a
             href="#home"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('home');
+              setMobileMenuOpen(false);
             }}
-            className="flex items-center gap-1.5 text-2xl font-bold tracking-tight text-white group"
+            className="flex items-center gap-1.5 text-xl sm:text-2xl font-bold tracking-tight text-white group"
           >
             <span className="font-heading tracking-wider">NIA</span>
-            <span className="w-2.5 h-2.5 rounded-full bg-pink-500 shadow-[0_0_12px_#ec4899] group-hover:scale-125 transition-transform"></span>
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-pink-500 shadow-[0_0_12px_#ec4899] group-hover:scale-125 transition-transform"></span>
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-1 bg-slate-900/60 p-1.5 rounded-full border border-white/5 backdrop-blur-md">
+          <nav className="hidden lg:flex items-center space-x-1 bg-slate-900/60 p-1 rounded-full border border-white/5 backdrop-blur-md">
             {navSections.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                className={`px-3.5 py-1 rounded-full text-xs sm:text-sm font-medium transition-all ${
                   activeSection === item.id
                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-500/20'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
@@ -208,17 +235,85 @@ const App = () => {
             ))}
           </nav>
 
-          {/* Action button */}
-          <button
-            onClick={() => scrollToSection('contact')}
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-pink-600 via-rose-600 to-indigo-600 hover:opacity-95 shadow-lg shadow-pink-500/20 hover:shadow-pink-500/30 transition-all hover:scale-105 active:scale-95"
-          >
-            Let's Talk
-          </button>
+          {/* Right Header Actions */}
+          <div className="flex items-center gap-2">
+            {/* Desktop Let's Talk Button */}
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="hidden sm:inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-pink-600 via-rose-600 to-indigo-600 hover:opacity-95 shadow-md shadow-pink-500/20 hover:shadow-pink-500/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              Let's Talk
+            </button>
+
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden w-9 h-9 rounded-xl bg-slate-900/90 border border-white/15 text-slate-200 hover:text-white hover:border-pink-500/50 flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-pink-400" /> : <Menu className="w-5 h-5 text-slate-200" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Navigation Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="lg:hidden border-b border-white/10 bg-[#070913]/98 backdrop-blur-2xl px-4 py-4 space-y-3 shadow-2xl overflow-hidden"
+            >
+              <div className="flex flex-col divide-y divide-white/5 py-1">
+                {navSections.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      scrollToSection(item.id);
+                      setTimeout(() => scrollToSection(item.id), 80);
+                    }}
+                    className={`w-full py-2.5 px-3 text-xs font-semibold text-left transition-all flex items-center justify-between group cursor-pointer ${
+                      activeSection === item.id
+                        ? 'text-pink-400 bg-pink-500/10 font-bold rounded-xl'
+                        : 'text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-xl'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] font-mono text-slate-500">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+                    {activeSection === item.id ? (
+                      <span className="w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_8px_#ec4899]"></span>
+                    ) : (
+                      <span className="text-slate-600 group-hover:text-slate-400 group-hover:translate-x-0.5 transition-all text-[11px]">→</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className="pt-2 border-t border-white/5">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    scrollToSection('contact');
+                    setTimeout(() => scrollToSection('contact'), 80);
+                  }}
+                  className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-pink-600 via-rose-600 to-indigo-600 text-white shadow-lg text-center cursor-pointer"
+                >
+                  Let's Talk ✨
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-20 space-y-24 md:space-y-32">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-20 space-y-24 md:space-y-32 overflow-x-clip">
         {/* ================= HERO SECTION ================= */}
         <section id="home" className="min-h-[calc(100vh-5.5rem)] flex items-center py-4">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full max-w-6xl mx-auto">
@@ -323,7 +418,7 @@ const App = () => {
             <div className="lg:col-span-5 relative flex justify-center items-end min-h-[420px] sm:min-h-[470px]" data-reveal style={{ '--reveal-delay': '150ms' }}>
               <div className="relative w-full max-w-[360px] sm:max-w-[400px] flex justify-center items-end">
                 {/* Background N1A Large Outline Watermark */}
-                <div className="absolute top-0 -right-6 sm:-right-8 text-[90px] sm:text-[120px] font-black text-slate-800/25 select-none font-heading tracking-tighter -z-10 leading-none pointer-events-none">
+                <div className="absolute top-0 right-0 sm:-right-8 text-[85px] sm:text-[120px] font-black text-slate-800/25 select-none font-heading tracking-tighter -z-10 leading-none pointer-events-none overflow-hidden">
                   N1A
                 </div>
 
@@ -351,31 +446,35 @@ const App = () => {
                   <div className="absolute -top-10 -right-10 w-36 h-36 bg-sky-300/30 rounded-full blur-2xl"></div>
                 </div>
 
-                {/* Transparent Photo Cutout - Elevated Upwards & Behind Foreground Cards */}
-                <div className="relative z-10 w-full flex justify-center items-end -translate-y-6 sm:-translate-y-8">
+                {/* Transparent Photo Cutout - Blended Seamlessly with Alpha Gradient Mask */}
+                <div
+                  className="relative z-10 w-full flex justify-center items-end -translate-y-6 sm:-translate-y-8 pointer-events-none"
+                  style={{
+                    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 98%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 98%)',
+                  }}
+                >
                   <img
                     src={profilePhoto}
                     alt={name}
-                    className="w-auto h-[390px] sm:h-[450px] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)] filter contrast-105"
+                    className="w-auto h-[390px] sm:h-[450px] object-contain object-bottom filter contrast-105"
                   />
-                  {/* Soft bottom fade overlay */}
-                  <div className="absolute bottom-0 inset-x-0 h-24 sm:h-32 bg-gradient-to-t from-[#07080d] via-[#07080d]/80 to-transparent pointer-events-none z-10"></div>
                 </div>
 
-                {/* Floating Badge 1: GPA (Left) - In Front (z-30) */}
-                <div className="absolute top-[30%] -left-3 sm:-left-6 glow-card px-3.5 py-2 rounded-2xl flex items-center gap-2.5 border border-white/10 shadow-2xl backdrop-blur-xl z-30 hover:scale-105 transition-transform">
-                  <div className="p-1.5 rounded-xl bg-blue-500/15 text-sky-400 border border-blue-500/25">
-                    <TrendingUp className="w-3.5 h-3.5" />
+                {/* Floating Badge 1: Specialty (Top-Left) - Soft Glassmorphism */}
+                <div className="absolute top-[3%] -left-2 sm:-left-6 bg-slate-900/70 backdrop-blur-2xl px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-2 sm:gap-2.5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-30 hover:scale-105 transition-transform">
+                  <div className="p-1 sm:p-1.5 rounded-xl bg-blue-500/20 text-sky-400 border border-blue-500/30 shrink-0">
+                    <Code className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <p className="text-[9px] text-slate-400 uppercase tracking-wider font-semibold">GPA</p>
-                    <p className="text-xs sm:text-sm font-bold text-white tracking-wide">{gpa}</p>
+                    <p className="text-[9px] text-slate-400 uppercase tracking-wider font-semibold">Specialty</p>
+                    <p className="text-xs sm:text-sm font-bold text-white tracking-wide">Web & AI Tech</p>
                   </div>
                 </div>
 
-                {/* Floating Badge 2: Location (Right) - In Front (z-30) */}
-                <div className="absolute top-[46%] -right-3 sm:-right-6 glow-card px-3.5 py-2 rounded-2xl flex items-center gap-2 border border-white/10 shadow-2xl backdrop-blur-xl z-30 hover:scale-105 transition-transform">
-                  <div className="p-1.5 rounded-lg bg-pink-500/10 text-pink-400">
+                {/* Floating Badge 2: Location (Right) - Soft Glassmorphism */}
+                <div className="absolute top-[62%] -right-2 sm:-right-6 bg-slate-900/70 backdrop-blur-2xl px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-2 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-30 hover:scale-105 transition-transform">
+                  <div className="p-1 sm:p-1.5 rounded-lg bg-pink-500/20 text-pink-400 shrink-0">
                     <MapPin className="w-3.5 h-3.5 text-pink-400" />
                   </div>
                   <div>
@@ -385,14 +484,14 @@ const App = () => {
                 </div>
 
                 {/* Neon Pink Signature Scribble (Bottom-Left) */}
-                <div className="absolute bottom-6 -left-4 sm:-left-8 text-pink-400 select-none z-30 pointer-events-none">
+                <div className="absolute bottom-4 -left-3 sm:-left-7 text-pink-400 select-none z-30 pointer-events-none opacity-85">
                   <svg className="w-16 h-10 stroke-pink-500 fill-none drop-shadow-[0_0_8px_rgba(236,72,153,0.8)]" viewBox="0 0 100 60">
                     <path d="M10,45 Q30,10 50,35 T90,20 Q60,50 30,30" strokeWidth="2.5" strokeLinecap="round" />
                   </svg>
                 </div>
 
-                {/* Mantra Card (Bottom-Right) */}
-                <div className="absolute bottom-1 -right-2 sm:-right-4 glow-card px-3.5 sm:px-4 py-2.5 rounded-2xl border border-white/10 shadow-2xl text-left z-30 backdrop-blur-xl">
+                {/* Mantra Card (Bottom-Right) - Soft Glassmorphism Seamless Blend */}
+                <div className="absolute bottom-1 -right-2 sm:-right-4 bg-slate-900/70 backdrop-blur-2xl px-3.5 sm:px-4 py-2.5 rounded-2xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] text-left z-30">
                   <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium">Always learning</p>
                   <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium">Always building</p>
                   <p className="text-xs sm:text-xs font-bold text-slate-200">
@@ -410,6 +509,7 @@ const App = () => {
           <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#07080d] to-transparent pointer-events-none z-20" />
 
           <HeroScrollVideoReveal
+            badgeImgSrc={logoImg}
             topText={
               <>
                 Crafting digital experiences,
@@ -451,23 +551,23 @@ const App = () => {
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
               ABOUT ME
             </h2>
-            <span className="text-pink-400 font-handwriting text-2xl sm:ml-4 sm:-rotate-2">
-              More than just a student. ✨
+            <span className="text-pink-400 font-handwriting text-xl sm:text-2xl sm:ml-4 sm:-rotate-2">
+              “Always learning, always growing.” ✨
             </span>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-            {/* Left Mini Photo Card */}
-            <div className="lg:col-span-4 glow-card p-4 rounded-3xl border border-white/10 relative overflow-hidden flex flex-col items-center justify-center text-center">
-              <div className="w-full h-64 sm:h-72 rounded-2xl overflow-hidden relative">
+          <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+            {/* Left Mini Photo Card - Hidden on Mobile, Visible on Desktop */}
+            <div className="hidden lg:flex lg:col-span-4 glow-card p-4 rounded-3xl border border-white/10 relative overflow-hidden flex-col items-center justify-between text-center">
+              <div className="w-full h-72 sm:h-80 md:h-84 rounded-2xl overflow-hidden relative bg-slate-950/60">
                 <img
                   src={aboutPhoto || profilePhoto}
                   alt={name}
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-[center_top] scale-[1.03] transition-transform duration-500 hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
               </div>
-              <div className="pt-4 flex items-center justify-between w-full px-2">
+              <div className="pt-3.5 flex items-center justify-between w-full px-2">
                 <div className="text-left">
                   <p className="text-sm font-bold text-white">Ayu Saniatus S.</p>
                   <p className="text-xs text-pink-400">Informatics UNS</p>
@@ -479,7 +579,7 @@ const App = () => {
             </div>
 
             {/* Middle Main Bio & Counters */}
-            <div className="lg:col-span-5 glow-card p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6">
+            <div className="lg:col-span-4 glow-card p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <h3 className="text-xl sm:text-2xl font-bold text-white">
                   Curious mind. <br />
@@ -507,37 +607,31 @@ const App = () => {
               </div>
             </div>
 
-            {/* Right Academic Card */}
-            <div className="lg:col-span-3 glow-card p-6 rounded-3xl border border-white/10 flex flex-col justify-between space-y-4">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-blue-500/10 text-sky-400 border border-sky-500/20">
-                    <GraduationCap className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400">University</p>
-                    <p className="text-sm font-bold text-white leading-tight">Universitas Sebelas Maret</p>
-                  </div>
+            {/* Right: Academic Status Card */}
+            <div className="lg:col-span-4 glow-card p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+                <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
+                  <GraduationCap className="w-5 h-5" />
                 </div>
+                <div>
+                  <h3 className="text-base font-bold text-white font-heading">
+                    Academic Background
+                  </h3>
+                  <p className="text-xs text-slate-400">Universitas Sebelas Maret (UNS)</p>
+                </div>
+              </div>
 
+              <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
                   <p className="text-xs text-slate-400">Study Program</p>
                   <p className="text-sm font-semibold text-slate-200">Informatics (S1)</p>
                   <p className="text-[11px] text-sky-400">2024 – Present</p>
                 </div>
-
                 <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
                   <p className="text-xs text-slate-400">Level</p>
-                  <p className="text-sm font-semibold text-slate-200">Second Year Undergraduate</p>
+                  <p className="text-sm font-semibold text-slate-200">Second Year</p>
+                  <p className="text-[11px] text-pink-400">Undergraduate</p>
                 </div>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-pink-500/10 to-indigo-500/10 border border-pink-500/20 flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] text-pink-300 font-bold uppercase tracking-wider">Current GPA</p>
-                  <p className="text-lg font-black text-white">{gpa}</p>
-                </div>
-                <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
               </div>
             </div>
           </div>
@@ -558,42 +652,41 @@ const App = () => {
             </div>
             <a
               href="#projects"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('projects');
-              }}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-pink-400 hover:text-pink-300 self-start sm:self-center"
+              className="text-xs text-slate-400 hover:text-pink-400 flex items-center gap-1 transition-colors group self-start sm:self-auto"
             >
-              <span>Explore Projects</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <span>Lihat Projek Saya</span>
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
 
-          {/* Chronological Vertical Timeline with Interactive Documentation & Project Modal */}
+          {/* Interactive Experience Timeline Component */}
           <ExperienceTimeline experiences={experiences} />
         </section>
 
-        {/* ================= 03 ACHIEVEMENTS ================= */}
+        {/* ================= 03 ACHIEVEMENTS & CERTIFICATIONS ================= */}
         <section id="achievements" className="space-y-8 scroll-mt-28" data-reveal>
           {/* Section Number Header */}
           <div>
             <span className="text-sm font-bold text-sky-400 tracking-wider">03</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
-              ACHIEVEMENTS
+              ACHIEVEMENTS & CERTIFICATIONS
             </h2>
             <p className="text-slate-400 text-sm mt-1 max-w-xl">
-              Challenges that shaped my confidence, leadership, and achievements that I'm proud of.
+              Competitive essay awards, graphic design accolades, and verified professional bootcamp certifications.
             </p>
           </div>
 
-          {/* Gamified Interactive Achievement & Certification Vault */}
-          <GamifiedAchievements achievements={achievements} certifications={certifications} />
+          {/* Gamified Achievements Holographic Component */}
+          <GamifiedAchievements
+            achievements={achievements}
+            certifications={certifications}
+          />
         </section>
 
         {/* ================= 04 PROJECTS ================= */}
         <section id="projects" className="space-y-8 scroll-mt-28" data-reveal>
-          {/* Section Number Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          {/* Section Number Header with Category Filter */}
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
             <div>
               <span className="text-sm font-bold text-sky-400 tracking-wider">04</span>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
@@ -627,9 +720,9 @@ const App = () => {
             </div>
           </div>
 
-          {/* 3D Circular Project Showcase */}
+          {/* Desktop View: Original 3D Circular Spotlight Showcase (md+) */}
           {projectShowcaseItems.length > 0 && (
-            <div className="glow-card rounded-3xl border border-white/10 p-4 sm:p-8 flex justify-center items-center overflow-hidden relative bg-gradient-to-b from-slate-900/60 to-slate-950/90 shadow-2xl">
+            <div className="hidden md:flex glow-card rounded-3xl border border-white/10 p-6 sm:p-8 justify-center items-center overflow-hidden relative bg-gradient-to-b from-slate-900/60 to-slate-950/90 shadow-2xl">
               <div className="w-full max-w-4xl">
                 <div className="text-center pb-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/20">
@@ -656,6 +749,11 @@ const App = () => {
               </div>
             </div>
           )}
+
+          {/* Mobile View: Swipeable / Scrollable Horizontal Projects Slider (< md) */}
+          <div className="md:hidden">
+            <ProjectsSlider projects={projects} selectedCategory={selectedCategory} />
+          </div>
         </section>
 
         {/* ================= 05 TECH STACK ================= */}
@@ -687,7 +785,7 @@ const App = () => {
           </div>
         </section>
 
-        {/* ================= 06 CERITA NIA (Stories / Blog) ================= */}
+        {/* ================= 06 CERITA NIA ================= */}
         <section id="stories" className="space-y-8 scroll-mt-28" data-reveal>
           {/* Section Number Header */}
           <div>
@@ -700,7 +798,6 @@ const App = () => {
             </p>
           </div>
 
-          {/* Interactive Modeled Cerita Nia Journal Cards & Reader Modal */}
           <CeritaNiaInteractive
             stories={stories}
             onSeeMore={() => {
@@ -712,25 +809,25 @@ const App = () => {
 
         {/* ================= 07 CONTACT ================= */}
         <section id="contact" className="space-y-8 scroll-mt-28" data-reveal>
-          {/* Section Number Header */}
-          <div>
+          {/* Section Number Header - Centered */}
+          <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-sm font-bold text-sky-400 tracking-wider">07</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
               CONTACT
             </h2>
-            <p className="text-slate-400 text-sm mt-1 max-w-xl">
+            <p className="text-slate-400 text-xs sm:text-sm mt-1">
               Have an idea or want to collaborate? Let's create something meaningful together.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-8 items-start">
+          <div className="w-full max-w-5xl mx-auto grid lg:grid-cols-12 gap-6 sm:gap-8 items-start">
             {/* Left: Contact Form */}
-            <div className="lg:col-span-7 glow-card p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
-              <h3 className="text-xl font-bold text-white">Send a Direct Message</h3>
+            <div className="lg:col-span-7 glow-card p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10 space-y-5 sm:space-y-6 w-full">
+              <h3 className="text-lg sm:text-xl font-bold text-white">Send a Direct Message</h3>
 
               {formStatus.success ? (
-                <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+                <div className="p-4 sm:p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
                   <div>
                     <p className="font-bold text-sm">Message Sent Successfully! ✨</p>
                     <p className="text-xs text-emerald-200/80 mt-0.5">
@@ -740,9 +837,9 @@ const App = () => {
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 sm:mb-2">
                         Your Name
                       </label>
                       <input
@@ -750,12 +847,12 @@ const App = () => {
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-pink-500 transition-colors"
+                        className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-pink-500 transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 sm:mb-2">
                         Your Email *
                       </label>
                       <input
@@ -764,93 +861,93 @@ const App = () => {
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-pink-500 transition-colors"
+                        className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-pink-500 transition-colors"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 sm:mb-2">
                       Your Message *
                     </label>
                     <textarea
                       required
-                      rows={5}
+                      rows={4}
                       placeholder="Hi Nia, let's connect and discuss..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-pink-500 transition-colors resize-none"
+                      className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-pink-500 transition-colors resize-none"
                     ></textarea>
                   </div>
 
                   <button
                     type="submit"
                     disabled={formStatus.submitting}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-600 hover:from-pink-600 hover:to-indigo-600 text-white shadow-lg shadow-indigo-500/25 transition-all inline-flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-600 hover:from-pink-600 hover:to-indigo-600 text-white shadow-lg shadow-indigo-500/25 transition-all inline-flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
                   >
                     <span>{formStatus.submitting ? 'Sending...' : 'Send Message'}</span>
-                    <Send className="w-4 h-4" />
+                    <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 </form>
               )}
             </div>
 
             {/* Right: Direct Reach & Note */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
               {/* Direct Info List */}
-              <div className="glow-card p-6 sm:p-7 rounded-3xl border border-white/10 space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <div className="glow-card p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-white/10 space-y-3 sm:space-y-4 w-full overflow-hidden">
+                <h4 className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">
                   Or reach me directly
                 </h4>
 
-                <div className="space-y-3 text-sm">
+                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm w-full">
                   <a
                     href={contactLinks.email}
-                    className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white"
+                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
                   >
-                    <Mail className="w-5 h-5 text-pink-400 shrink-0" />
-                    <span className="truncate">{contactLinks.emailDisplay}</span>
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400 shrink-0" />
+                    <span className="truncate min-w-0 flex-1">{contactLinks.emailDisplay}</span>
                   </a>
 
                   <a
                     href={contactLinks.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white"
+                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
                   >
-                    <Linkedin className="w-5 h-5 text-sky-400 shrink-0" />
-                    <span className="truncate">{contactLinks.linkedinDisplay}</span>
+                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 shrink-0" />
+                    <span className="truncate min-w-0 flex-1">{contactLinks.linkedinDisplay}</span>
                   </a>
 
                   <a
                     href={contactLinks.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white"
+                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
                   >
-                    <Github className="w-5 h-5 text-slate-300 shrink-0" />
-                    <span className="truncate">{contactLinks.githubDisplay}</span>
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 shrink-0" />
+                    <span className="truncate min-w-0 flex-1">{contactLinks.githubDisplay}</span>
                   </a>
 
                   <a
                     href={contactLinks.instagram}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white"
+                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
                   >
-                    <Instagram className="w-5 h-5 text-pink-400 shrink-0" />
-                    <span className="truncate">{contactLinks.instagramDisplay}</span>
+                    <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400 shrink-0" />
+                    <span className="truncate min-w-0 flex-1">{contactLinks.instagramDisplay}</span>
                   </a>
                 </div>
               </div>
 
               {/* Pink Handwritten Sticky Note */}
-              <div className="p-6 rounded-3xl bg-gradient-to-br from-pink-950/40 via-rose-900/20 to-slate-900 border border-pink-500/30 relative overflow-hidden shadow-xl">
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-pink-500/20 rounded-full blur-xl"></div>
-                <p className="text-xl font-handwriting text-pink-300 font-bold">
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-pink-950/40 via-rose-900/20 to-slate-900 border border-pink-500/30 relative overflow-hidden shadow-xl w-full">
+                <div className="absolute -bottom-6 -right-6 w-20 sm:w-24 h-20 sm:h-24 bg-pink-500/20 rounded-full blur-xl pointer-events-none"></div>
+                <p className="text-lg sm:text-xl font-handwriting text-pink-300 font-bold">
                   Leave a message for Nia ✨
                 </p>
-                <p className="text-xs text-slate-300 leading-relaxed mt-1">
+                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed mt-1">
                   I'd love to hear your thoughts, feedback, collaboration opportunities, or anything you want to share. Let's grow together!
                 </p>
               </div>

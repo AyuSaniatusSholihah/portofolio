@@ -12,7 +12,6 @@ export const portfolioContent = {
   major: 'Informatics',
   academicYear: '2024 - Now',
   studyLevel: 'Second Year Undergraduate Student',
-  gpa: '3.61 / 4.00',
   location: 'Surakarta, ID',
   bioShort:
     "I enjoy turning ideas into digital experiences through code, design, and data. I'm currently exploring web development, UI/UX, data, and machine learning while continuously challenging myself through projects, competitions, organizations, and new experiences.",

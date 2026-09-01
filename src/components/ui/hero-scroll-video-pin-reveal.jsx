@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import defaultLogo from '../../assets/projects/logo.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,7 +38,7 @@ export const HeroScrollVideoReveal = ({
       intentional
     </>
   ),
-  badgeImgSrc = 'https://i.ibb.co/kgFKP37B/rotate-text.png',
+  badgeImgSrc = defaultLogo,
   className = '',
 }) => {
   const benefitRef = useRef(null);
@@ -307,13 +308,17 @@ export const HeroScrollVideoReveal = ({
               className="relative w-full h-full overflow-hidden flex justify-center items-center bg-[#07080d] will-change-[clip-path]"
               style={{ backgroundColor: '#07080d', zIndex: 2 }}
             >
-              {/* Rotating Circular Text Badge */}
+              {/* Rotating Circular Animated Logo Badge */}
               {badgeImgSrc && (
-                <img
-                  src={badgeImgSrc}
-                  alt="rotating badge"
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 z-20 pointer-events-none animate-[spin_18s_linear_infinite] opacity-90 select-none"
-                />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 z-20 pointer-events-none flex items-center justify-center">
+                  <div className="w-full h-full rounded-full p-1 bg-gradient-to-tr from-pink-500 via-indigo-500 to-sky-400 animate-[spin_16s_linear_infinite] shadow-[0_0_35px_rgba(236,72,153,0.45)]">
+                    <img
+                      src={badgeImgSrc}
+                      alt="logo"
+                      className="w-full h-full rounded-full object-cover border-2 border-slate-950/80 select-none"
+                    />
+                  </div>
+                </div>
               )}
 
               {/* Drone Video */}
@@ -330,17 +335,6 @@ export const HeroScrollVideoReveal = ({
               >
                 <source src={videoSrc} type="video/mp4" />
               </video>
-
-              {/* Centered Glassmorphic Play Icon */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex justify-center items-center shadow-xl">
-                  <img
-                    src="https://i.ibb.co/Q3RY2jTB/play-icon.png"
-                    alt="play"
-                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 object-contain"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
