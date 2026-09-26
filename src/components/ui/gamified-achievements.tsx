@@ -115,31 +115,40 @@ export const GamifiedAchievements: React.FC<GamifiedAchievementsProps> = ({
         transition={{ duration: 0.5 }}
         className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2"
       >
-        {/* Left: Tab Switcher */}
+        {/* Left: Tab Switcher or Badge */}
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            onClick={() => handleTabChange('achievements')}
-            className={`px-5 py-2 rounded-2xl text-xs font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
-              activeTab === 'achievements'
-                ? 'bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 text-white shadow-lg shadow-pink-500/30 scale-105 border border-pink-400/40'
-                : 'bg-slate-900/90 text-slate-400 border border-white/10 hover:text-white hover:border-white/20'
-            }`}
-          >
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Prestasi & Lomba ({achievements.length})</span>
-          </button>
+          {certifications && certifications.length > 0 ? (
+            <>
+              <button
+                onClick={() => handleTabChange('achievements')}
+                className={`px-5 py-2 rounded-2xl text-xs font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                  activeTab === 'achievements'
+                    ? 'bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 text-white shadow-lg shadow-pink-500/30 scale-105 border border-pink-400/40'
+                    : 'bg-slate-900/90 text-slate-400 border border-white/10 hover:text-white hover:border-white/20'
+                }`}
+              >
+                <Trophy className="w-3.5 h-3.5" />
+                <span>Prestasi & Lomba ({achievements.length})</span>
+              </button>
 
-          <button
-            onClick={() => handleTabChange('certifications')}
-            className={`px-5 py-2 rounded-2xl text-xs font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
-              activeTab === 'certifications'
-                ? 'bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-sky-500/30 scale-105 border border-sky-400/40'
-                : 'bg-slate-900/90 text-slate-400 border border-white/10 hover:text-white hover:border-white/20'
-            }`}
-          >
-            <FileCheck2 className="w-3.5 h-3.5" />
-            <span>Sertifikat Pelatihan & Seminar ({certifications.length})</span>
-          </button>
+              <button
+                onClick={() => handleTabChange('certifications')}
+                className={`px-5 py-2 rounded-2xl text-xs font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                  activeTab === 'certifications'
+                    ? 'bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-sky-500/30 scale-105 border border-sky-400/40'
+                    : 'bg-slate-900/90 text-slate-400 border border-white/10 hover:text-white hover:border-white/20'
+                }`}
+              >
+                <FileCheck2 className="w-3.5 h-3.5" />
+                <span>Sertifikat Pelatihan & Seminar ({certifications.length})</span>
+              </button>
+            </>
+          ) : (
+            <div className="px-4 py-2 rounded-2xl text-xs font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 text-white shadow-lg shadow-pink-500/30 border border-pink-400/40 flex items-center gap-2">
+              <Trophy className="w-4 h-4 text-amber-300" />
+              <span>Daftar Prestasi & Penghargaan Kompetisi ({achievements.length})</span>
+            </div>
+          )}
         </div>
 
         {/* Right: XP Badge & Navigation */}

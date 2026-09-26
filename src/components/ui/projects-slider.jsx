@@ -27,15 +27,16 @@ export const ProjectsSlider = ({ projects = [], selectedCategory = 'Semua' }) =>
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Filter projects by categoryGroup or category
+  // Filter projects by categoryGroup, category, or semester
   const filteredProjects =
     selectedCategory === 'Semua' || selectedCategory === 'All'
       ? projects
       : projects.filter((p) => {
           const group = (p.categoryGroup || p.type || '').toLowerCase();
           const cat = (p.category || '').toLowerCase();
+          const sem = (p.semester || '').toLowerCase();
           const target = selectedCategory.toLowerCase();
-          return group.includes(target) || cat.includes(target);
+          return group.includes(target) || cat.includes(target) || sem.includes(target);
         });
 
   const checkScroll = () => {
@@ -152,15 +153,20 @@ export const ProjectsSlider = ({ projects = [], selectedCategory = 'Semua' }) =>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#090d19] via-slate-950/40 to-transparent"></div>
 
                 {/* Floating Category Pill */}
-                <div className="absolute top-3 left-3 z-10">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-950/80 backdrop-blur-md text-pink-300 border border-pink-500/30 shadow-md">
+                <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 flex-wrap">
+                  {proj.semester && (
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-pink-600/90 backdrop-blur-md text-white border border-pink-400/40 shadow-md">
+                      {proj.semester}
+                    </span>
+                  )}
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-950/80 backdrop-blur-md text-pink-300 border border-pink-500/30 shadow-md">
                     {proj.categoryGroup || proj.type || 'Projek'}
                   </span>
                 </div>
 
                 {/* Status / Category tag */}
                 <div className="absolute top-3 right-3 z-10">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-slate-950/80 backdrop-blur-md text-sky-300 border border-sky-500/30 shadow-md">
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-medium bg-slate-950/80 backdrop-blur-md text-sky-300 border border-sky-500/30 shadow-md">
                     {proj.category || 'Web App'}
                   </span>
                 </div>

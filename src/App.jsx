@@ -14,9 +14,7 @@ import {
   Bookmark,
   Code,
   Layers,
-  Sparkles,
-  Send,
-  CheckCircle2,
+  MessageSquare,
   ChevronUp,
   GraduationCap,
   MapPin,
@@ -46,7 +44,6 @@ import ExperienceTimeline from './components/ui/experience-timeline.jsx';
 import GamifiedAchievements from './components/ui/gamified-achievements.jsx';
 import CeritaNiaInteractive from './components/ui/cerita-nia-interactive.jsx';
 import AllStoriesPage from './components/ui/all-stories-page.jsx';
-import AdminDashboard from './components/admin/AdminDashboard.jsx';
 import { usePortfolio } from './hooks/usePortfolio.js';
 import { usePortfolioData } from './hooks/usePortfolioData.js';
 import { useScrollReveal } from './hooks/useScrollReveal.js';
@@ -56,11 +53,10 @@ const App = () => {
   const { content } = usePortfolioData();
   useScrollReveal();
 
-  // Page View Routing State ('home' | 'stories' | 'admin')
+  // Page View Routing State ('home' | 'stories')
   const [currentView, setCurrentView] = useState(() => {
     const hash = window.location.hash;
     if (hash === '#/stories' || hash === '#stories') return 'stories';
-    if (hash === '#/admin' || hash === '#admin') return 'admin';
     return 'home';
   });
 
@@ -70,8 +66,6 @@ const App = () => {
       const hash = window.location.hash;
       if (hash === '#/stories' || hash === '#stories') {
         setCurrentView('stories');
-      } else if (hash === '#/admin' || hash === '#admin') {
-        setCurrentView('admin');
       } else {
         setCurrentView('home');
       }
@@ -81,9 +75,6 @@ const App = () => {
   }, []);
 
   // Contact Form State
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [formStatus, setFormStatus] = useState({ submitting: false, success: false, error: null });
-
   // Project Category Filter State
   const [selectedCategory, setSelectedCategory] = useState('Semua');
 
@@ -140,46 +131,7 @@ const App = () => {
     }));
   }, [filteredProjects]);
 
-  // Handle contact form submit
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.email || !formData.message) return;
 
-    setFormStatus({ submitting: true, success: false, error: null });
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) {
-        setFormStatus({ submitting: false, success: true, error: null });
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setFormStatus({ submitting: false, success: false, error: null }), 6000);
-      } else {
-        // Fallback simulate success for client feedback
-        setFormStatus({ submitting: false, success: true, error: null });
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setFormStatus({ submitting: false, success: false, error: null }), 6000);
-      }
-    } catch (err) {
-      setFormStatus({ submitting: false, success: true, error: null });
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setFormStatus({ submitting: false, success: false, error: null }), 6000);
-    }
-  };
-
-  // Dedicated Admin Studio Dashboard View
-  if (currentView === 'admin') {
-    return (
-      <AdminDashboard
-        onBackToPortfolio={() => {
-          window.location.hash = '';
-          setCurrentView('home');
-        }}
-      />
-    );
-  }
 
   // Dedicated Full Archive Page View for Stories & Articles
   if (currentView === 'stories') {
@@ -730,10 +682,10 @@ const App = () => {
           <div>
             <span className="text-sm font-bold text-sky-400 tracking-wider">03</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
-              ACHIEVEMENTS & CERTIFICATIONS
+              ACHIEVEMENTS & AWARDS
             </h2>
             <p className="text-slate-400 text-sm mt-1 max-w-xl">
-              Competitive essay awards, graphic design accolades, and verified professional bootcamp certifications.
+              Penghargaan lomba esai nasional, inovasi media pembelajaran berbasis IT, perancangan poster ilmiah, dan kejuaraan olahraga.
             </p>
           </div>
 
@@ -842,143 +794,150 @@ const App = () => {
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-sm font-bold text-sky-400 tracking-wider">06</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading uppercase">
-              CONTACT
+              GET IN TOUCH
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm mt-1">
-              Have an idea or want to collaborate? Let's create something meaningful together.
+              Tertarik berdiskusi, kolaborasi proyek, atau terhubung langsung? Silakan hubungi saya melalui saluran resmi berikut.
             </p>
           </div>
 
-          <div className="w-full max-w-5xl mx-auto grid lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-            {/* Left: Contact Form */}
-            <div className="lg:col-span-7 glow-card p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/10 space-y-5 sm:space-y-6 w-full">
-              <h3 className="text-lg sm:text-xl font-bold text-white">Send a Direct Message</h3>
+          <div className="w-full max-w-4xl mx-auto">
+            {/* Grid of Direct Contact Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Email Card */}
+              <a
+                href={contactLinks.email}
+                className="group glow-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:border-pink-500/50 bg-gradient-to-b from-slate-900/80 to-slate-950/90 transition-all duration-300 hover:scale-[1.02] flex flex-col justify-between space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-pink-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Email Resmi</h4>
+                  <p className="text-sm font-semibold text-white group-hover:text-pink-300 transition-colors truncate mt-1">
+                    {contactLinks.emailDisplay}
+                  </p>
+                  <span className="inline-block mt-3 text-[11px] font-semibold text-pink-400 group-hover:underline">
+                    Kirim Email Langsung →
+                  </span>
+                </div>
+              </a>
 
-              {formStatus.success ? (
-                <div className="p-4 sm:p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
-                  <div>
-                    <p className="font-bold text-sm">Message Sent Successfully! ✨</p>
-                    <p className="text-xs text-emerald-200/80 mt-0.5">
-                      Thank you for reaching out. Nia will get back to you soon!
-                    </p>
+              {/* WhatsApp Card */}
+              <a
+                href={contactLinks.whatsapp || `https://wa.me/${contactLinks.phone}`}
+                target="_blank"
+                rel="noreferrer"
+                className="group glow-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:border-emerald-500/50 bg-gradient-to-b from-slate-900/80 to-slate-950/90 transition-all duration-300 hover:scale-[1.02] flex flex-col justify-between space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all">
+                    <MessageSquare className="w-6 h-6" />
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">WhatsApp</h4>
+                  <p className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors truncate mt-1">
+                    {contactLinks.phoneDisplay || '0895704294747'}
+                  </p>
+                  <span className="inline-block mt-3 text-[11px] font-semibold text-emerald-400 group-hover:underline">
+                    Hubungi via WhatsApp →
+                  </span>
+                </div>
+              </a>
+
+              {/* LinkedIn Card */}
+              <a
+                href={contactLinks.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="group glow-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:border-sky-500/50 bg-gradient-to-b from-slate-900/80 to-slate-950/90 transition-all duration-300 hover:scale-[1.02] flex flex-col justify-between space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 group-hover:scale-110 group-hover:bg-sky-500/20 transition-all">
+                    <Linkedin className="w-6 h-6" />
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">LinkedIn</h4>
+                  <p className="text-sm font-semibold text-white group-hover:text-sky-300 transition-colors truncate mt-1">
+                    Ayu Saniatus Sholihah
+                  </p>
+                  <span className="inline-block mt-3 text-[11px] font-semibold text-sky-400 group-hover:underline">
+                    Profil Profesional →
+                  </span>
+                </div>
+              </a>
+
+              {/* GitHub Card */}
+              <a
+                href={contactLinks.github}
+                target="_blank"
+                rel="noreferrer"
+                className="group glow-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:border-purple-500/50 bg-gradient-to-b from-slate-900/80 to-slate-950/90 transition-all duration-300 hover:scale-[1.02] flex flex-col justify-between space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                    <Github className="w-6 h-6" />
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">GitHub</h4>
+                  <p className="text-sm font-semibold text-white group-hover:text-purple-300 transition-colors truncate mt-1">
+                    {contactLinks.githubDisplay}
+                  </p>
+                  <span className="inline-block mt-3 text-[11px] font-semibold text-purple-400 group-hover:underline">
+                    Lihat Kode & Repositori →
+                  </span>
+                </div>
+              </a>
+
+              {/* Instagram Card */}
+              <a
+                href={contactLinks.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="group glow-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:border-rose-500/50 bg-gradient-to-b from-slate-900/80 to-slate-950/90 transition-all duration-300 hover:scale-[1.02] flex flex-col justify-between space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 group-hover:bg-rose-500/20 transition-all">
+                    <Instagram className="w-6 h-6" />
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-rose-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Instagram</h4>
+                  <p className="text-sm font-semibold text-white group-hover:text-rose-300 transition-colors truncate mt-1">
+                    {contactLinks.instagramDisplay}
+                  </p>
+                  <span className="inline-block mt-3 text-[11px] font-semibold text-rose-400 group-hover:underline">
+                    Kunjungi Instagram →
+                  </span>
+                </div>
+              </a>
+
+              {/* Location Card */}
+              <div className="glow-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-b from-slate-900/80 to-slate-950/90 flex flex-col justify-between space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                    <MapPin className="w-6 h-6" />
                   </div>
                 </div>
-              ) : (
-                <form onSubmit={handleContactSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 sm:mb-2">
-                        Your Name
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-pink-500 transition-colors"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 sm:mb-2">
-                        Your Email *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-pink-500 transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 sm:mb-2">
-                      Your Message *
-                    </label>
-                    <textarea
-                      required
-                      rows={4}
-                      placeholder="Hi Nia, let's connect and discuss..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-pink-500 transition-colors resize-none"
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={formStatus.submitting}
-                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-600 hover:from-pink-600 hover:to-indigo-600 text-white shadow-lg shadow-indigo-500/25 transition-all inline-flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
-                  >
-                    <span>{formStatus.submitting ? 'Sending...' : 'Send Message'}</span>
-                    <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Right: Direct Reach & Note */}
-            <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
-              {/* Direct Info List */}
-              <div className="glow-card p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-white/10 space-y-3 sm:space-y-4 w-full overflow-hidden">
-                <h4 className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">
-                  Or reach me directly
-                </h4>
-
-                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm w-full">
-                  <a
-                    href={contactLinks.email}
-                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
-                  >
-                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400 shrink-0" />
-                    <span className="truncate min-w-0 flex-1">{contactLinks.emailDisplay}</span>
-                  </a>
-
-                  <a
-                    href={contactLinks.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
-                  >
-                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 shrink-0" />
-                    <span className="truncate min-w-0 flex-1">{contactLinks.linkedinDisplay}</span>
-                  </a>
-
-                  <a
-                    href={contactLinks.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
-                  >
-                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 shrink-0" />
-                    <span className="truncate min-w-0 flex-1">{contactLinks.githubDisplay}</span>
-                  </a>
-
-                  <a
-                    href={contactLinks.instagram}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-pink-500/40 hover:bg-white/[0.04] transition-all text-slate-300 hover:text-white min-w-0 max-w-full overflow-hidden"
-                  >
-                    <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400 shrink-0" />
-                    <span className="truncate min-w-0 flex-1">{contactLinks.instagramDisplay}</span>
-                  </a>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Domisili / Lokasi</h4>
+                  <p className="text-xs font-semibold text-slate-200 mt-1 leading-relaxed">
+                    {contactLinks.address}
+                  </p>
+                  <span className="inline-block mt-2 text-[11px] font-semibold text-amber-400">
+                    Surakarta & Rembang, Jawa Tengah
+                  </span>
                 </div>
-              </div>
-
-              {/* Pink Handwritten Sticky Note */}
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-pink-950/40 via-rose-900/20 to-slate-900 border border-pink-500/30 relative overflow-hidden shadow-xl w-full">
-                <div className="absolute -bottom-6 -right-6 w-20 sm:w-24 h-20 sm:h-24 bg-pink-500/20 rounded-full blur-xl pointer-events-none"></div>
-                <p className="text-lg sm:text-xl font-handwriting text-pink-300 font-bold">
-                  Leave a message for Nia ✨
-                </p>
-                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed mt-1">
-                  I'd love to hear your thoughts, feedback, collaboration opportunities, or anything you want to share. Let's grow together!
-                </p>
               </div>
             </div>
           </div>
